@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://2r2r5jjaqbav"]
+
+[ext_resource type="PackedScene" uid="uid://drkpy2c26ih3s" path="res://note.tscn" id="1_tuuak"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_plxcq"]
+
+[node name="FailNote" type="FailNote"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="Note" parent="RigidBody2D" instance=ExtResource("1_tuuak")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_plxcq")
+disabled = true

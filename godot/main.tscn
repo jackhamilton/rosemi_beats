@@ -1,0 +1,158 @@
+[gd_scene load_steps=11 format=3 uid="uid://dd4wedw83l0f7"]
+
+[ext_resource type="Script" uid="uid://cnkhs3erobsjs" path="res://Scripts/Buttons/start_button.gd" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://o1l0ll4fhh1x" path="res://Assets/bg2.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://b1bi3ssdqlkvm" path="res://icon.svg" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://cwtq52cjcg7uv" path="res://Scripts/Buttons/player.gd" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://c1vjlccxumh25" path="res://Scripts/Buttons/resettable_rigidbody.gd" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://drkpy2c26ih3s" path="res://note.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://2r2r5jjaqbav" path="res://fail_note.tscn" id="7_272bh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(0, 0)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1bvp3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bvp3"]
+radius = 57.85
+height = 125.27
+
+[node name="root" type="SceneRoot"]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameUI" type="Control" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundAspectContainer" type="CenterContainer" parent="UI/GameUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/GameUI/BackgroundAspectContainer"]
+custom_minimum_size = Vector2(1200, 800)
+layout_mode = 2
+texture = ExtResource("2_h2yge")
+expand_mode = 3
+
+[node name="StartMenu" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -20.0
+offset_right = 23.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StartMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/StartMenu/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scene_root")]
+layout_mode = 2
+text = "Start"
+script = ExtResource("2_1bvp3")
+scene_root = NodePath("../../../../..")
+
+[node name="GameRoot" type="Node2D" parent="."]
+
+[node name="Bounds" type="StaticBody2D" parent="GameRoot"]
+position = Vector2(0, 643)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameRoot/Bounds"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="Player" type="GameObject" parent="GameRoot"]
+visible = false
+script = ExtResource("3_lquwl")
+metadata/_custom_type_script = "uid://cwtq52cjcg7uv"
+
+[node name="RigidBody2D" type="RigidBody2D" parent="GameRoot/Player" node_paths=PackedStringArray("scene_root")]
+physics_material_override = SubResource("PhysicsMaterial_1bvp3")
+script = ExtResource("4_lquwl")
+scene_root = NodePath("../../..")
+metadata/_custom_type_script = "uid://c1vjlccxumh25"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameRoot/Player/RigidBody2D"]
+shape = SubResource("CapsuleShape2D_1bvp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameRoot/Player/RigidBody2D"]
+texture = ExtResource("3_1bvp3")
+
+[node name="Spawner" type="Spawner" parent="GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four")]
+seconds_ahead_to_spawn = 2
+spawn_zone_one = NodePath("SpawnZone")
+spawn_zone_two = NodePath("SpawnZone2")
+spawn_zone_three = NodePath("SpawnZone3")
+spawn_zone_four = NodePath("SpawnZone4")
+note_scene = ExtResource("6_7mycd")
+note_fail_scene = ExtResource("7_272bh")
+
+[node name="SpawnZone" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+rect = NodePath("ColorRect")
+inverted = true
+position = Vector2(-107, 515)
+
+[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone"]
+custom_minimum_size = Vector2(500, 100)
+offset_right = 500.0
+offset_bottom = 100.0
+
+[node name="SpawnZone2" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+rect = NodePath("ColorRect")
+position = Vector2(779, 353)
+
+[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone2"]
+custom_minimum_size = Vector2(500, 100)
+offset_right = 500.0
+offset_bottom = 100.0
+
+[node name="SpawnZone3" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+rect = NodePath("ColorRect")
+inverted = true
+position = Vector2(-106, 347)
+
+[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone3"]
+custom_minimum_size = Vector2(500, 100)
+offset_right = 500.0
+offset_bottom = 100.0
+
+[node name="SpawnZone4" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+rect = NodePath("ColorRect")
+position = Vector2(780, 519)
+
+[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone4"]
+custom_minimum_size = Vector2(500, 100)
+offset_right = 500.0
+offset_bottom = 100.0
+
+[connection signal="pressed" from="UI/StartMenu/CenterContainer/VBoxContainer/Button" to="UI/StartMenu/CenterContainer/VBoxContainer/Button" method="_on_pressed"]
