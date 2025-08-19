@@ -2,6 +2,7 @@ use godot::prelude::*;
 
 struct RustExtension;
 
+pub mod libs;
 pub mod nodes;
 pub mod objects;
 pub mod ui;

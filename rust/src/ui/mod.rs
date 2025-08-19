@@ -1,6 +1,7 @@
 pub mod animations;
 pub mod screens;
 
+pub mod hold_line;
 pub mod spawn_zone;
 pub mod song_load_screen;
 pub mod song_cell;
