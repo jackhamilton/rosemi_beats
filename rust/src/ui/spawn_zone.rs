@@ -1,5 +1,7 @@
-use crate::{node_spawner::Spawner, note::Note, note_animation::NoteAnimation, scorer::Scorer, step_converter::NoteType};
-use godot::{classes::{ColorRect, Line2D}, global::absf, prelude::*};
+use crate::ui::animations::note_animation::NoteAnimation;
+use crate::objects::note::Note;
+use crate::{nodes::node_spawner::Spawner, nodes::scorer::Scorer, step_converter::NoteType};
+use godot::{classes::{ColorRect}, global::absf, prelude::*};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Node2D)]

@@ -1,4 +1,4 @@
-use crate::{node_spawner::Spawner, step_converter::NoteType};
+use crate::{nodes::node_spawner::Spawner, step_converter::NoteType};
 use godot::prelude::*;
 
 #[derive(GodotClass, Debug)]

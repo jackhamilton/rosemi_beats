@@ -5,8 +5,8 @@ use godot::classes::Control;
 use godot::classes::IControl;
 
 use crate::loader::Loader;
-use crate::song_cell::SongCell;
-use crate::song_display_screen::DisplayScreen;
+use crate::ui::song_cell::SongCell;
+use crate::ui::song_display_screen::DisplayScreen;
 use crate::step_converter::Song;
 
 #[derive(GodotClass, Debug)]

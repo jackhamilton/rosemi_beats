@@ -1,6 +1,7 @@
+use crate::ui::spawn_zone::SpawnZone;
+use crate::step_converter::NoteType;
+use crate::step_converter::TimedNote;
 use godot::{classes::{AudioStreamMp3, AudioStreamPlayer, InputEvent}, prelude::*};
-
-use crate::{note, spawn_zone::SpawnZone, step_converter::{NoteType, TimedNote}};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Node)]

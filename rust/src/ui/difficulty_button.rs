@@ -3,7 +3,7 @@ use godot::prelude::*;
 use godot::classes::Button;
 use godot::classes::IButton;
 
-use crate::scene_root::SceneRoot;
+use crate::nodes::scene_root::SceneRoot;
 use crate::step_converter::Song;
 
 #[derive(GodotClass, Debug)]

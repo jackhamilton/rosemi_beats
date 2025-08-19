@@ -1,8 +1,7 @@
+use crate::objects::game_object::GameObject;
+use crate::nodes::node_spawner::Spawner;
 use godot::prelude::*;
 use godot::classes::{CollisionShape2D, Control, Node, RigidBody2D, StaticBody2D};
-use crate::game_object::GameObject;
-use crate::loader::Loader;
-use crate::node_spawner::Spawner;
 use crate::step_converter::Song;
 
 #[derive(GodotClass, Debug)]

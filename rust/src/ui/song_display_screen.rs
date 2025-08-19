@@ -6,7 +6,7 @@ use godot::classes::TextureRect;
 use godot::classes::VBoxContainer;
 use godot::prelude::*;
 
-use crate::difficulty_button::DifficultyButton;
+use crate::ui::difficulty_button::DifficultyButton;
 use crate::step_converter::Song;
 
 #[derive(GodotClass, Debug)]
