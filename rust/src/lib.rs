@@ -9,7 +9,12 @@ mod step_converter;
 mod loader;
 mod spawn_zone;
 mod note;
-mod fail_note;
+mod note_animation;
+mod scorer;
+mod song_load_screen;
+mod song_cell;
+mod difficulty_button;
+mod song_display_screen;
 
 #[cfg(test)]
 mod tests;

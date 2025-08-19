@@ -1,4 +1,4 @@
-use godot::{prelude::*};
+use godot::{classes::{AudioStreamMp3, AudioStreamPlayer, InputEvent}, prelude::*};
 
 use crate::{note, spawn_zone::SpawnZone, step_converter::{NoteType, TimedNote}};
 
@@ -33,6 +33,10 @@ pub struct Spawner {
     pub note_scene: Option<Gd<PackedScene>>,
     #[export]
     pub note_fail_scene: Option<Gd<PackedScene>>,
+    #[export]
+    pub note_success_scene: Option<Gd<PackedScene>>,
+    #[export]
+    pub audio_stream: Option<Gd<AudioStreamPlayer>>,
 
     pub base: Base<Node>
 }
@@ -45,10 +49,14 @@ impl Spawner {
         self.player_base_position = Some(position);
     }
 
-    pub fn start(&mut self, song: Vec<TimedNote>) {
+    pub fn start(&mut self, song: Vec<TimedNote>, resource: String) {
         self.time = 0.0;
         self.song = Some(song);
         self.playing = true;
+        let stream = self.audio_stream.as_mut().expect("No audio stream");
+        let audio_stream = AudioStreamMp3::load_from_file(&resource).expect("Failed to load audio file");
+        stream.set_stream(&audio_stream);
+        stream.play();
     }
 
     pub fn get_next_notes(&self) -> Option<TimedNote> {
@@ -65,7 +73,7 @@ impl Spawner {
         let two = &line.line.1;
         let three = &line.line.2;
         let four = &line.line.3;
-        let ref_self = self.to_gd();
+        let ref_self = self.to_gd().clone();
         let note_scene = self.note_scene.as_ref().expect("Error unwrapping note scene");
         if let Some(zone_one) = &mut self.spawn_zone_one {
             if *one != NoteType::Empty {
@@ -110,6 +118,8 @@ impl INode for Spawner {
             spawn_zone_four: None,
             note_scene: None,
             note_fail_scene: None,
+            note_success_scene: None,
+            audio_stream: None,
             base
         }
     }
@@ -123,6 +133,20 @@ impl INode for Spawner {
                     self.song.as_mut().expect("Unknown error").remove(0);
                     self.spawn_notes(&next_notes);
                 }
+            }
+        }
+    }
+
+    fn input(&mut self, event: Gd<InputEvent>) {
+        if event.is_pressed() {
+            if event.is_action("left") {
+                self.spawn_zone_one.as_mut().expect("Zone not found").bind_mut().process_hit(self.time, self.time_before_fail_ms as f32 / 1000.0, self.note_success_scene.clone());
+            } else if event.is_action("up_right") {
+                self.spawn_zone_two.as_mut().expect("Zone not found").bind_mut().process_hit(self.time, self.time_before_fail_ms as f32 / 1000.0, self.note_success_scene.clone());
+            } else if event.is_action("up_left") {
+                self.spawn_zone_three.as_mut().expect("Zone not found").bind_mut().process_hit(self.time, self.time_before_fail_ms as f32 / 1000.0, self.note_success_scene.clone());
+            } else if event.is_action("right") {
+                self.spawn_zone_four.as_mut().expect("Zone not found").bind_mut().process_hit(self.time, self.time_before_fail_ms as f32 / 1000.0, self.note_success_scene.clone());
             }
         }
     }

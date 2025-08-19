@@ -1,4 +1,4 @@
-use godot::global::godot_print;
+use godot::prelude::GodotConvert;
 use regex::Regex;
 
 #[derive(Debug, Clone)]
@@ -114,7 +114,8 @@ pub struct TimedNote {
     pub line: Line
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, GodotConvert)]
+#[godot(via = i8)]
 pub enum NoteType {
     Empty = 0,
     Single = 1,

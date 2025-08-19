@@ -1,15 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=15 format=3 uid="uid://dd4wedw83l0f7"]
 
-[ext_resource type="Script" uid="uid://cnkhs3erobsjs" path="res://Scripts/Buttons/start_button.gd" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://c6p855t7v3qku" path="res://Scripts/GameUI/score_label.gd" id="2_4c57u"]
 [ext_resource type="Texture2D" uid="uid://o1l0ll4fhh1x" path="res://Assets/bg2.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://b1bi3ssdqlkvm" path="res://icon.svg" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://du5qogcl5fugp" path="res://Scripts/GameUI/combo_label.gd" id="3_efxa6"]
 [ext_resource type="Script" uid="uid://cwtq52cjcg7uv" path="res://Scripts/Buttons/player.gd" id="3_lquwl"]
-[ext_resource type="Script" uid="uid://c1vjlccxumh25" path="res://Scripts/Buttons/resettable_rigidbody.gd" id="4_lquwl"]
 [ext_resource type="PackedScene" uid="uid://drkpy2c26ih3s" path="res://note.tscn" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://2r2r5jjaqbav" path="res://fail_note.tscn" id="7_272bh"]
+[ext_resource type="Script" uid="uid://dka7c40tph5hg" path="res://Scripts/GameUI/spawn_zone_line.gd" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://2r2r5jjaqbav" path="res://Scripts/Animations/fail_note.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://qupllthnsfi0" path="res://Scripts/Animations/success_note.tscn" id="7_kek77"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_size = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(0, 0)
+size = Vector2(3000, 4)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1bvp3"]
 
@@ -17,7 +22,16 @@ size = Vector2(0, 0)
 radius = 57.85
 height = 125.27
 
-[node name="root" type="SceneRoot"]
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_4c57u"]
+
+[node name="root" type="SceneRoot" node_paths=PackedStringArray("game_root", "ui_root", "start_menu", "game_ui", "player", "player_physics", "spawner")]
+game_root = NodePath("CenterContainer/GameRoot")
+ui_root = NodePath("UI")
+start_menu = NodePath("UI")
+game_ui = NodePath("UI/GameUI")
+player = NodePath("CenterContainer/GameRoot/Player")
+player_physics = NodePath("")
+spawner = NodePath("CenterContainer/GameRoot/Spawner")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -28,7 +42,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GameUI" type="Control" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,64 +64,63 @@ layout_mode = 2
 texture = ExtResource("2_h2yge")
 expand_mode = 3
 
-[node name="StartMenu" type="Control" parent="UI"]
+[node name="CenterContainer" type="CenterContainer" parent="UI/GameUI"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameUI/CenterContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="UI/GameUI/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5vw27")
+horizontal_alignment = 1
+script = ExtResource("2_4c57u")
+scorer = NodePath("../../../../../CenterContainer/GameRoot/Scorer")
+
+[node name="ComboLabel" type="Label" parent="UI/GameUI/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
+layout_mode = 2
+text = "0x"
+horizontal_alignment = 1
+script = ExtResource("3_efxa6")
+scorer = NodePath("../../../../../CenterContainer/GameRoot/Scorer")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/StartMenu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -20.0
-offset_right = 23.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GameRoot" type="Node2D" parent="CenterContainer"]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/StartMenu/CenterContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="UI/StartMenu/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scene_root")]
-layout_mode = 2
-text = "Start"
-script = ExtResource("2_1bvp3")
-scene_root = NodePath("../../../../..")
-
-[node name="GameRoot" type="Node2D" parent="."]
-
-[node name="Bounds" type="StaticBody2D" parent="GameRoot"]
+[node name="Bounds" type="StaticBody2D" parent="CenterContainer/GameRoot"]
 position = Vector2(0, 643)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameRoot/Bounds"]
-position = Vector2(0, 3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterContainer/GameRoot/Bounds"]
+position = Vector2(588, -4)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="Player" type="GameObject" parent="GameRoot"]
-visible = false
+[node name="Player" type="GameObject" parent="CenterContainer/GameRoot"]
+position = Vector2(582, 572)
 script = ExtResource("3_lquwl")
 metadata/_custom_type_script = "uid://cwtq52cjcg7uv"
 
-[node name="RigidBody2D" type="RigidBody2D" parent="GameRoot/Player" node_paths=PackedStringArray("scene_root")]
+[node name="RigidBody2D" type="RigidBody2D" parent="CenterContainer/GameRoot/Player"]
 physics_material_override = SubResource("PhysicsMaterial_1bvp3")
-script = ExtResource("4_lquwl")
-scene_root = NodePath("../../..")
-metadata/_custom_type_script = "uid://c1vjlccxumh25"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameRoot/Player/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterContainer/GameRoot/Player/RigidBody2D"]
 shape = SubResource("CapsuleShape2D_1bvp3")
 
-[node name="Sprite2D" type="Sprite2D" parent="GameRoot/Player/RigidBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="CenterContainer/GameRoot/Player/RigidBody2D"]
 texture = ExtResource("3_1bvp3")
 
-[node name="Spawner" type="Spawner" parent="GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four")]
+[node name="Spawner" type="Spawner" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four", "audio_stream")]
 seconds_ahead_to_spawn = 2
 spawn_zone_one = NodePath("SpawnZone")
 spawn_zone_two = NodePath("SpawnZone2")
@@ -116,43 +128,88 @@ spawn_zone_three = NodePath("SpawnZone3")
 spawn_zone_four = NodePath("SpawnZone4")
 note_scene = ExtResource("6_7mycd")
 note_fail_scene = ExtResource("7_272bh")
+note_success_scene = ExtResource("7_kek77")
+audio_stream = NodePath("../../../AudioStreamPlayer")
 
-[node name="SpawnZone" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+[node name="SpawnZone" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")
 inverted = true
+spawner = NodePath("..")
+scorer = NodePath("../../Scorer")
 position = Vector2(-107, 515)
 
-[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone"]
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
 custom_minimum_size = Vector2(500, 100)
 offset_right = 500.0
 offset_bottom = 100.0
 
-[node name="SpawnZone2" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+[node name="Line2D" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
+z_index = 100
+position = Vector2(0, 25)
+points = PackedVector2Array(0, 0, 0, 50)
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+script = ExtResource("7_5vw27")
+
+[node name="SpawnZone2" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")
+spawner = NodePath("..")
+scorer = NodePath("../../Scorer")
 position = Vector2(779, 353)
 
-[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone2"]
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone2"]
 custom_minimum_size = Vector2(500, 100)
 offset_right = 500.0
 offset_bottom = 100.0
 
-[node name="SpawnZone3" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+[node name="Line2D2" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone2"]
+z_index = 100
+position = Vector2(-886, 25)
+points = PackedVector2Array(0, 0, 0, 50)
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+script = ExtResource("7_5vw27")
+
+[node name="SpawnZone3" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")
 inverted = true
+spawner = NodePath("..")
+scorer = NodePath("../../Scorer")
 position = Vector2(-106, 347)
 
-[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone3"]
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone3"]
 custom_minimum_size = Vector2(500, 100)
 offset_right = 500.0
 offset_bottom = 100.0
 
-[node name="SpawnZone4" type="SpawnZone" parent="GameRoot/Spawner" node_paths=PackedStringArray("rect")]
+[node name="Line2D3" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone3"]
+z_index = 100
+position = Vector2(-1, 25)
+points = PackedVector2Array(0, 0, 0, 50)
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+script = ExtResource("7_5vw27")
+
+[node name="SpawnZone4" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")
+spawner = NodePath("..")
+scorer = NodePath("../../Scorer")
 position = Vector2(780, 519)
 
-[node name="ColorRect" type="ColorRect" parent="GameRoot/Spawner/SpawnZone4"]
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone4"]
 custom_minimum_size = Vector2(500, 100)
 offset_right = 500.0
 offset_bottom = 100.0
 
-[connection signal="pressed" from="UI/StartMenu/CenterContainer/VBoxContainer/Button" to="UI/StartMenu/CenterContainer/VBoxContainer/Button" method="_on_pressed"]
+[node name="Line2D4" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone4"]
+z_index = 100
+position = Vector2(-887, 21)
+points = PackedVector2Array(0, 0, 0, 50)
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+script = ExtResource("7_5vw27")
+
+[node name="Scorer" type="Scorer" parent="CenterContainer/GameRoot"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMP3_4c57u")

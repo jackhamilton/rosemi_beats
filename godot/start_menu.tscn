@@ -1,0 +1,95 @@
+[gd_scene load_steps=4 format=3 uid="uid://c46ie1wo70cod"]
+
+[ext_resource type="PackedScene" uid="uid://duw8ogg6ghd3w" path="res://display_cell.tscn" id="1_ia0g5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ia0g5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vpdu5"]
+font_size = 12
+
+[node name="StartMenu" type="LoadScreen" node_paths=PackedStringArray("insertion_container", "song_display")]
+insertion_container = NodePath("CenterContainer/HBoxContainer/PanelContainer/ScrollContainer/VBoxContainer")
+cell_scene = ExtResource("1_ia0g5")
+song_display = NodePath("CenterContainer/HBoxContainer/SongDisplay")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -20.0
+offset_right = 23.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/PanelContainer/ScrollContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "image_container")]
+button_container = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer")
+title_label = NodePath("MarginContainer/VBoxContainer/Label")
+subtitle_label = NodePath("MarginContainer/VBoxContainer/Label2")
+image_container = NodePath("MarginContainer/VBoxContainer/TextureRect")
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+expand_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Placeholder [title]"
+label_settings = SubResource("LabelSettings_ia0g5")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Placeholder [subtitle]"
+label_settings = SubResource("LabelSettings_vpdu5")
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_right = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2

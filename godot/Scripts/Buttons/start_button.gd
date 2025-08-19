@@ -1,6 +1,8 @@
 extends Button
 
-@export var scene_root: SceneRoot
+var main_scene = preload("res://main.tscn")
 
 func _on_pressed() -> void:
-	scene_root.start_game.emit()
+	var main = main_scene.instantiate()
+	get_tree().root.add_child(main)
+	get_node("/root/StartMenu").queue_free()

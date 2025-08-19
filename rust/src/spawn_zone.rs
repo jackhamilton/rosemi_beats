@@ -1,5 +1,5 @@
-use crate::{fail_note::FailNote, node_spawner::Spawner, note::Note, step_converter::NoteType};
-use godot::{classes::ColorRect, prelude::*};
+use crate::{node_spawner::Spawner, note::Note, note_animation::NoteAnimation, scorer::Scorer, step_converter::NoteType};
+use godot::{classes::{ColorRect, Line2D}, global::absf, prelude::*};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Node2D)]
@@ -8,11 +8,54 @@ pub struct SpawnZone {
     pub rect: Option<Gd<ColorRect>>,
     #[export]
     pub inverted: bool,
+    #[export]
+    pub spawner: Option<Gd<Spawner>>,
+    #[export]
+    pub scorer: Option<Gd<Scorer>>,
+    #[var]
+    pub line_x: f32,
 
     pub base: Base<Node2D>
 }
 
+#[godot_api]
 impl SpawnZone {
+    #[func]
+    pub fn process_hit(&mut self, time: f32, max_time: f32, success_scene: Option<Gd<PackedScene>>) {
+        let children = self.base().get_children();
+        let mut nearest_note: Option<Gd<Note>> = None;
+        for child in children.iter_shared() {
+            if child.is_instance_valid() {
+                if let Ok(note) = child.try_cast::<Note>() {
+                    match nearest_note {
+                        None => nearest_note = Some(note),
+                        Some(ref prev) => {
+                            if prev.bind().timestamp > note.bind().timestamp {
+                                nearest_note = Some(note)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if let Some(mut nearest) = nearest_note {
+            let note_timer = nearest.bind().timestamp;
+            let diff = absf((note_timer - time).into());
+            if diff < max_time as f64 {
+                // Within timing window
+                // Free note
+                let nearest_position = nearest.bind().base().get_position();
+                nearest.bind_mut().base_mut().queue_free();
+                // Spawn successful scene
+                let mut instance = success_scene.as_ref().expect("No success scene for notes connected to spawner").instantiate().expect("Failed to instantiate scene").try_cast::<NoteAnimation>().expect("No note animation in note animation");
+                instance.bind_mut().base_mut().set_position(nearest_position);
+                self.base_mut().add_child(&instance);
+                // Notify scoring
+                self.scorer.as_mut().expect("Error getting scorer").bind_mut().hit(diff, max_time as f64);
+            }
+        }
+    }
+
     pub fn spawn_note(&mut self, note_scene: &Gd<PackedScene>, timestamp: f32, note_type: NoteType, spawner_ref: Gd<Spawner>) {
         let mut instantiated = note_scene.instantiate().expect("Error instantiating note scene").try_cast::<Note>().expect("Note scene does not contain note");
         let mut note = instantiated.bind_mut();
@@ -43,7 +86,26 @@ impl INode2D for SpawnZone {
         Self {
             rect: None,
             inverted: false,
+            line_x: 0.0,
+            spawner: None,
+            scorer: None,
             base
+        }
+    }
+
+    fn enter_tree(&mut self) {
+        let rect_ref = self.rect.as_mut().expect("No reference to base rect");
+        let rect_rect = rect_ref.get_rect();
+        let inverted = self.inverted;
+        let spawner = self.spawner.as_ref().expect("Note has no spawner reference").bind();
+        let add_end_time = spawner.time_before_fail_ms as f32;
+        let total_time = spawner.seconds_ahead_to_spawn as f32 + (spawner.time_before_fail_ms as f32 / 1000.0);
+        let percent_advance = (add_end_time/1000.0) / total_time;
+        let x = rect_rect.size.x * percent_advance;
+        if inverted {
+            self.line_x = rect_rect.size.x - x;
+        } else {
+            self.line_x = x;
         }
     }
 
@@ -52,11 +114,13 @@ impl INode2D for SpawnZone {
         // I know
         let rect_rect = rect_ref.get_rect();
         let inverted = self.inverted;
-        let mut base_ref = self.base_mut();
+        let base_ref = self.base_mut();
         let children = base_ref.get_children();
+        drop(base_ref);
         for child in children.iter_shared() {
             if let Ok(mut note) = child.try_cast::<Note>() {
                 if note.is_instance_valid() {
+                    let mut base_ref = self.base_mut();
                     let mut note_ref = note.bind_mut();
                     let spawner = note_ref.spawner_ref.as_ref().expect("Note has no spawner reference").bind();
                     let ahead = spawner.seconds_ahead_to_spawn;
@@ -73,10 +137,12 @@ impl INode2D for SpawnZone {
                         drop(note_base_ref);
                         drop(note_ref);
                         note_parent.expect("No parent for note").remove_child(&note);
-                        let mut instantiated = destroy_scene.instantiate().expect("Error instantiating note destruction scene").try_cast::<FailNote>().expect("Scene does not contain node2D");
+                        let mut instantiated = destroy_scene.instantiate().expect("Error instantiating note destruction scene").try_cast::<NoteAnimation>().expect("Scene does not contain node2D");
                         instantiated.bind_mut();
                         instantiated.set_position(note_position);
                         base_ref.add_child(&instantiated);
+                        drop(base_ref);
+                        self.scorer.as_mut().expect("Error getting scorer").bind_mut().miss();
                         continue
                     }
                     let percent_advance = time_left / std::convert::Into::<f32>::into(ahead);
