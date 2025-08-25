@@ -5,6 +5,7 @@ use godot::classes::Control;
 use godot::classes::IControl;
 
 use crate::loader::Loader;
+use crate::loader::SongMetadata;
 use crate::save::storage::Storage;
 use crate::ui::song_cell::SongCell;
 use crate::ui::song_display_screen::DisplayScreen;
@@ -24,7 +25,14 @@ pub struct LoadScreen {
 }
 
 #[godot_api]
-impl LoadScreen {}
+impl LoadScreen {
+    pub fn select(&mut self, song: Vec<Song>, metadata: Gd<SongMetadata>, audio: String) {
+        let display = self.song_display.as_mut().expect("Could not lock song display");
+        let meta = metadata.bind();
+        let image = try_load::<Texture2D>(&meta.image_resource).expect("Improper image referenced");
+        display.bind_mut().setup(meta.title.to_string(), meta.subtitle.to_string(), image, song, audio, meta.url.clone().into());
+    }
+}
 
 #[godot_api]
 impl IControl for LoadScreen {
@@ -40,18 +48,21 @@ impl IControl for LoadScreen {
     fn enter_tree(&mut self) {
         Storage::load();
         let res = Loader::get_res();
+        let mut load_cell: Option<Gd<SongCell>> = None;
         for item in &res {
             let song = Song::from_str(item.text, item.bpm, item.metadata.clone());
             let metadata = item.metadata.clone();
             let cell = self.cell_scene.as_ref().expect("Cell scene not provided to menu");
             let mut init_cell = cell.try_instantiate_as::<SongCell>().expect("Could not cast scene to SongCell");
-            init_cell.bind_mut().setup(metadata.clone());
+            let arg = self.to_gd().clone();
+            init_cell.bind_mut().setup(metadata.clone(), item.audio.clone(), arg);
             init_cell.bind_mut().song = Some(song.clone());
             self.insertion_container.as_mut().expect("No insertion container mapped").add_child(&init_cell);
-            let display = self.song_display.as_mut().expect("Could not lock song display");
-            let meta = metadata.bind();
-            let image = try_load::<Texture2D>(&meta.image_resource).expect("Improper image referenced");
-            display.bind_mut().setup(meta.title.to_string(), meta.subtitle.to_string(), image, song, item.audio.clone(), meta.url.clone().into());
+            if load_cell.is_none() {
+                load_cell = Some(init_cell);
+                self.select(song, metadata, item.audio.clone());
+                load_cell.as_mut().expect("no load cell").bind_mut().toggled_on_entry = true;
+            }
         }
     }
 }

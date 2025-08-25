@@ -27,11 +27,30 @@ pub struct SceneRoot {
     #[export]
     pub control_menu: Option<Gd<ControlMenu>>,
 
+    pub song: Option<Song>,
+    pub song_file: Option<String>,
+
     pub base: Base<Node>
 }
 
 #[godot_api]
 impl SceneRoot {
+    #[signal]
+    pub fn start_game();
+
+    pub fn start_game_triggered(&mut self) {
+        let song = self.song.as_ref().expect("No song");
+        let song_file = self.song_file.as_ref().expect("No song file");
+        let spawner = self.spawner.as_mut().expect("No spawner");
+        spawner.bind_mut().start(
+            song.clone().rasterize(),
+            song_file.to_string(),
+            song.clone().title,
+            song.clone().max_combo,
+            song.difficulty as i32
+        );
+    }
+
     pub fn start(&mut self, song: Song, song_file: String) {
         let player = self.player.as_mut().expect("Player not found");
         let game_ui = self.game_ui.as_mut().expect("Game UI not found");
@@ -76,13 +95,8 @@ impl SceneRoot {
             Storage::set_controls_seen(true);
         }
 
-        spawner.start(
-            song.clone().rasterize(),
-            song_file,
-            song.clone().title,
-            song.clone().max_combo,
-            song.difficulty as i32
-        );
+        self.song_file = Some(song_file);
+        self.song = Some(song);
     }
 }
 
@@ -98,8 +112,14 @@ impl INode for SceneRoot {
             player_physics: None,
             spawner: None,
             control_menu: None,
+            song: None,
+            song_file: None,
             base
         }
+    }
+
+    fn enter_tree(&mut self) {
+        self.signals().start_game().connect_self(|this| this.start_game_triggered());
     }
 }
 

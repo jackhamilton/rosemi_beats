@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://drkpy2c26ih3s"]
 
-[ext_resource type="Texture2D" uid="uid://b1bi3ssdqlkvm" path="res://icon.svg" id="1_doocs"]
+[ext_resource type="Texture2D" uid="uid://btn8w5mwcvmlu" path="res://Assets/Images/buta.png" id="1_doocs"]
 
 [node name="Note" type="Note"]
 

@@ -40,7 +40,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer/HBoxContainer"]
-custom_minimum_size = Vector2(400, 500)
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/HBoxContainer/PanelContainer"]
@@ -53,12 +53,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "link", "best_score_label", "image_container")]
-button_container = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer")
-title_label = NodePath("MarginContainer/VBoxContainer/Label")
-subtitle_label = NodePath("MarginContainer/VBoxContainer/Label2")
-link = NodePath("MarginContainer/VBoxContainer/LinkButton")
-best_score_label = NodePath("MarginContainer/VBoxContainer/Panel/MarginContainer/score_label")
-image_container = NodePath("MarginContainer/VBoxContainer/TextureRect")
+button_container = NodePath("MarginContainer/CenterContainer/VBoxContainer/MarginContainer/VBoxContainer")
+title_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Label")
+subtitle_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Label2")
+link = NodePath("MarginContainer/CenterContainer/VBoxContainer/LinkButton")
+best_score_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Panel/MarginContainer/score_label")
+image_container = NodePath("MarginContainer/CenterContainer/VBoxContainer/TextureRect")
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
@@ -69,59 +69,63 @@ theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 expand_mode = 5
+stretch_mode = 6
 
-[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Placeholder [title]"
 label_settings = SubResource("LabelSettings_ia0g5")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Label2" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Placeholder [subtitle]"
 label_settings = SubResource("LabelSettings_vpdu5")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="LinkButton" type="LinkButton" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.554675, 0.69994, 1, 1)
 text = "STREAM ➤"
 underline = 1
 
-[node name="Container" type="Container" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="Container" type="Container" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="Panel" type="PanelContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer/Panel"]
 layout_mode = 2
 
-[node name="score_label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer/Panel/MarginContainer"]
+[node name="score_label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
 text = "Best"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 48
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 48
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2

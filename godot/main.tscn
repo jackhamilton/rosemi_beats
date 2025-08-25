@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=86 format=3 uid="uid://dd4wedw83l0f7"]
 
 [ext_resource type="Texture2D" uid="uid://vevltp88imeo" path="res://Assets/settingsgear.png" id="1_cegan"]
 [ext_resource type="Texture2D" uid="uid://dpl02vgeqjrok" path="res://Assets/wafflehouse.png" id="1_kek77"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ctshn8e3838l0" path="res://Assets/finish_screen.tscn" id="3_getpj"]
 [ext_resource type="PackedScene" uid="uid://bpylalkfe7wlo" path="res://Themes/controls.tscn" id="4_074og"]
 [ext_resource type="Texture2D" uid="uid://bawp212chtwne" path="res://Assets/idle-1.png" id="5_kek77"]
+[ext_resource type="Theme" uid="uid://g6s7kyscpx8r" path="res://Themes/UI/general.tres" id="5_ryguw"]
 [ext_resource type="Texture2D" uid="uid://exyhliisc4ky" path="res://Assets/idle-2.png" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://drkpy2c26ih3s" path="res://note.tscn" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://dka7c40tph5hg" path="res://Scripts/GameUI/spawn_zone_line.gd" id="7_5vw27"]
@@ -22,8 +23,15 @@
 [ext_resource type="AudioStream" uid="uid://d17rv6dm5aur5" path="res://Assets/Audio/hit.wav" id="17_yaehf"]
 [ext_resource type="Script" uid="uid://dskemq01u64mr" path="res://controls_manager.gd" id="20_82xsv"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_ryguw"]
+font_size = 128
+outline_size = 24
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
-font_size = 32
+font_size = 64
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(3000, 4)
@@ -526,24 +534,45 @@ layout_mode = 1
 
 [node name="Control" parent="UI/GameUI" instance=ExtResource("4_074og")]
 process_mode = 3
+visible = false
 z_index = 15
 layout_mode = 1
+
+[node name="Countdown" type="Countdown" parent="UI/GameUI" node_paths=PackedStringArray("root")]
+root = NodePath("../../..")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -64.0
+offset_right = 28.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_ryguw")
+horizontal_alignment = 1
 
 [node name="BackgroundAspectContainer" type="CenterContainer" parent="UI/GameUI"]
 z_index = -10
 z_as_relative = false
 layout_mode = 1
-offset_right = 1333.33
-offset_bottom = 750.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 760.0
+grow_horizontal = 2
 mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/GameUI/BackgroundAspectContainer"]
-custom_minimum_size = Vector2(900, 750)
+custom_minimum_size = Vector2(1300, 760)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("1_kek77")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 2
+stretch_mode = 6
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/GameUI"]
 custom_minimum_size = Vector2(0, 100)
@@ -553,24 +582,34 @@ anchor_right = 1.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameUI/CenterContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/GameUI/CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameUI/CenterContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="ScoreLabel" type="Label" parent="UI/GameUI/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
-custom_minimum_size = Vector2(250, 50)
+[node name="ScoreLabel" type="Label" parent="UI/GameUI/CenterContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
 layout_mode = 2
+theme = ExtResource("5_ryguw")
 text = "0"
 label_settings = SubResource("LabelSettings_5vw27")
 horizontal_alignment = 1
 script = ExtResource("2_4c57u")
-scorer = NodePath("../../../../../CenterContainer/GameRoot/Scorer")
+scorer = NodePath("../../../../../../CenterContainer/GameRoot/Scorer")
 
-[node name="ComboLabel" type="Label" parent="UI/GameUI/CenterContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
+[node name="ComboLabel" type="Label" parent="UI/GameUI/CenterContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("scorer")]
 layout_mode = 2
+theme = ExtResource("5_ryguw")
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
 text = "0x"
 horizontal_alignment = 1
 script = ExtResource("3_efxa6")
-scorer = NodePath("../../../../../CenterContainer/GameRoot/Scorer")
+scorer = NodePath("../../../../../../CenterContainer/GameRoot/Scorer")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 15
@@ -593,7 +632,7 @@ shape = SubResource("RectangleShape2D_h2yge")
 [node name="Player" type="Player" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("sprite")]
 sprite = NodePath("RigidBody2D/Sprite2D")
 z_index = 10
-position = Vector2(580, 572)
+position = Vector2(580, 650)
 
 [node name="RigidBody2D" type="RigidBody2D" parent="CenterContainer/GameRoot/Player"]
 physics_material_override = SubResource("PhysicsMaterial_1bvp3")
@@ -628,7 +667,7 @@ rect = NodePath("ColorRect")
 inverted = true
 spawner = NodePath("..")
 scorer = NodePath("../../Scorer")
-position = Vector2(-70, 515)
+position = Vector2(-70, 593)
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
 custom_minimum_size = Vector2(600, 100)
@@ -636,6 +675,7 @@ offset_right = 600.0
 offset_bottom = 100.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
 
 [node name="Line2D" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
 z_index = 100
@@ -649,7 +689,7 @@ script = ExtResource("7_5vw27")
 rect = NodePath("ColorRect")
 spawner = NodePath("..")
 scorer = NodePath("../../Scorer")
-position = Vector2(630, 400)
+position = Vector2(630, 478)
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone2"]
 custom_minimum_size = Vector2(600, 100)
@@ -671,7 +711,7 @@ rect = NodePath("ColorRect")
 inverted = true
 spawner = NodePath("..")
 scorer = NodePath("../../Scorer")
-position = Vector2(-70, 400)
+position = Vector2(-70, 478)
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone3"]
 custom_minimum_size = Vector2(600, 100)
@@ -692,7 +732,7 @@ script = ExtResource("7_5vw27")
 rect = NodePath("ColorRect")
 spawner = NodePath("..")
 scorer = NodePath("../../Scorer")
-position = Vector2(630, 515)
+position = Vector2(630, 593)
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer/GameRoot/Spawner/SpawnZone4"]
 custom_minimum_size = Vector2(600, 100)

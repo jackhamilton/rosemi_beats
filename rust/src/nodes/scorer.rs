@@ -23,9 +23,9 @@ impl Scorer {
     pub fn hit(&mut self, delta: f64, max_delta: f64) {
         let good = max_delta / 3.0;
         if delta < good {
-            self.score += 300 * self.combo;
+            self.score += 300 * (self.combo + 1);
         } else {
-            self.score += 100 * self.combo;
+            self.score += 100 * (self.combo + 1);
         }
         self.combo += 1;
         if self.combo > self.max_combo {

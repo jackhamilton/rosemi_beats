@@ -15,6 +15,10 @@ run/main_scene="uid://c46ie1wo70cod"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_height=720
+
 [gui]
 
 theme/custom="uid://g6s7kyscpx8r"

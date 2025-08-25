@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpylalkfe7wlo"]
+[gd_scene load_steps=8 format=3 uid="uid://bpylalkfe7wlo"]
 
 [ext_resource type="Theme" uid="uid://g6s7kyscpx8r" path="res://Themes/UI/general.tres" id="1_qo8cm"]
 [ext_resource type="FontFile" uid="uid://djyca2ww5ko37" path="res://Assets/Fonts/upheavtt.ttf" id="2_kq3yo"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://d1krqr5e4mfv" path="res://Assets/attack_left.png" id="2_xwvqn"]
 [ext_resource type="Texture2D" uid="uid://dh6tvhj5uqgyy" path="res://Assets/attack_right_up.png" id="4_kq3yo"]
 [ext_resource type="Texture2D" uid="uid://ba1idio3fju3p" path="res://Assets/attack_right.png" id="5_kxtwu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rirdr"]
+bg_color = Color(0.194349, 0.194349, 0.194349, 1)
 
 [node name="Control" type="ControlMenu" node_paths=PackedStringArray("volume_slider", "menu_button")]
 volume_slider = NodePath("Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/HSlider")
@@ -86,6 +89,7 @@ mouse_filter = 2
 custom_minimum_size = Vector2(400, 300)
 layout_mode = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rirdr")
 
 [node name="MarginContainer" type="MarginContainer" parent="Container/CenterContainer/PanelContainer"]
 layout_mode = 2
