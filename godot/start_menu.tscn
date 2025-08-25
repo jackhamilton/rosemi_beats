@@ -52,10 +52,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "image_container")]
+[node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "best_score_label", "image_container")]
 button_container = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer")
 title_label = NodePath("MarginContainer/VBoxContainer/Label")
 subtitle_label = NodePath("MarginContainer/VBoxContainer/Label2")
+best_score_label = NodePath("MarginContainer/VBoxContainer/score_label")
 image_container = NodePath("MarginContainer/VBoxContainer/TextureRect")
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -92,10 +93,21 @@ label_settings = SubResource("LabelSettings_vpdu5")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="Container" type="Container" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="score_label" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Best"
+horizontal_alignment = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2

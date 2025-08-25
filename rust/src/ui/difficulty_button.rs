@@ -48,7 +48,7 @@ pub enum Difficulty {
 }
 
 impl Difficulty {
-    fn get_text(&self) -> String {
+    pub fn get_text(&self) -> String {
         match self {
             Self::Easy => "EASY".to_string(),
             Self::Medium => "MEDIUM".to_string(),
@@ -64,7 +64,7 @@ impl Difficulty {
         }
     }
 
-    fn from(num: u8) -> Self {
+    pub fn from(num: u8) -> Self {
         match num {
             0 => Self::Easy,
             1 => Self::Medium,
@@ -85,9 +85,12 @@ impl IButton for DifficultyButton {
     fn pressed(&mut self) {
         let main_scene = try_load::<PackedScene>("res://main.tscn").expect("Main scene not found");
         let mut main = main_scene.instantiate_as::<SceneRoot>();
+        let children = self.base_mut().get_tree().expect("No tree").get_root().expect("No root").get_children();
         self.base_mut().get_tree().expect("Tree not found").get_root().expect("No root").add_child(&main);
         main.bind_mut().start(self.song.clone(), self.song_file.clone());
-        self.base_mut().get_node_as::<Node>("/root/StartMenu").queue_free();
+        for mut child in children.iter_shared() {
+            child.queue_free();
+        }
     }
 }
 

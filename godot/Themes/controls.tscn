@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dh6tvhj5uqgyy" path="res://Assets/attack_right_up.png" id="4_kq3yo"]
 [ext_resource type="Texture2D" uid="uid://ba1idio3fju3p" path="res://Assets/attack_right.png" id="5_kxtwu"]
 
-[node name="Control" type="ControlMenu"]
+[node name="Control" type="ControlMenu" node_paths=PackedStringArray("volume_slider", "menu_button")]
+volume_slider = NodePath("Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/HSlider")
+menu_button = NodePath("Container/Container2/Button")
 texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -55,6 +57,27 @@ theme_override_fonts/font = ExtResource("2_kq3yo")
 theme_override_font_sizes/font_size = 20
 text = "X"
 
+[node name="Container2" type="MarginContainer" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="Button" parent="Container/Container2"]
+z_index = 1000
+z_as_relative = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_kq3yo")
+theme_override_font_sizes/font_size = 20
+text = "Menu"
+
 [node name="CenterContainer" type="CenterContainer" parent="Container"]
 layout_mode = 2
 mouse_filter = 2
@@ -71,13 +94,18 @@ mouse_filter = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="Label" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderLabel"
 text = "Controls"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "click to remap"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -180,7 +208,18 @@ theme = ExtResource("1_qo8cm")
 action_mode = 0
 text = "f"
 
-[node name="Label2" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "click to remap"
-horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0

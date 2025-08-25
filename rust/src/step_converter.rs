@@ -1,8 +1,13 @@
+use godot::obj::Gd;
 use godot::prelude::GodotConvert;
 use regex::Regex;
 
+use crate::loader::SongMetadata;
+
 #[derive(Debug, Clone)]
 pub struct Song {
+    pub title: String,
+    pub max_combo: i32,
     pub bpm: f32,
     pub difficulty: u8,
     pub beats: Vec<Beat>
@@ -29,7 +34,7 @@ impl Song {
         timed_lines
     }
 
-    pub fn from_str(str: &'static str, bpm: f32) -> Vec<Song> {
+    pub fn from_str(str: &'static str, bpm: f32, metadata: Gd<SongMetadata>) -> Vec<Song> {
         // Separate song difficulties
         let songstart_regex = Regex::new(r"(?m)^//.*dance-single.*$").expect("Failed to construct songstart regex");
         let results: Vec<usize> = songstart_regex.find_iter(str).map(|m| m.start()).collect();
@@ -90,6 +95,8 @@ impl Song {
                 });
             }
             songs.push(Song {
+                title: metadata.bind().title.to_string(),
+                max_combo: metadata.bind().max_combo,
                 bpm,
                 beats,
                 difficulty

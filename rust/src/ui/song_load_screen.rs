@@ -41,7 +41,7 @@ impl IControl for LoadScreen {
         Storage::load();
         let res = Loader::get_res();
         for item in &res {
-            let song = Song::from_str(item.text, item.bpm);
+            let song = Song::from_str(item.text, item.bpm, item.metadata.clone());
             let metadata = item.metadata.clone();
             let cell = self.cell_scene.as_ref().expect("Cell scene not provided to menu");
             let mut init_cell = cell.try_instantiate_as::<SongCell>().expect("Could not cast scene to SongCell");

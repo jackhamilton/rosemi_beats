@@ -10,3 +10,4 @@ pub mod song_display_screen;
 pub mod control_menu;
 pub mod remap_button;
 pub mod ui_toggle_button;
+pub mod finish_menu;

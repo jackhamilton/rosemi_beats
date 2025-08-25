@@ -1,9 +1,10 @@
-[gd_scene load_steps=83 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=84 format=3 uid="uid://dd4wedw83l0f7"]
 
 [ext_resource type="Texture2D" uid="uid://vevltp88imeo" path="res://Assets/settingsgear.png" id="1_cegan"]
 [ext_resource type="Texture2D" uid="uid://dpl02vgeqjrok" path="res://Assets/wafflehouse.png" id="1_kek77"]
 [ext_resource type="Script" uid="uid://c6p855t7v3qku" path="res://Scripts/GameUI/score_label.gd" id="2_4c57u"]
 [ext_resource type="Script" uid="uid://du5qogcl5fugp" path="res://Scripts/GameUI/combo_label.gd" id="3_efxa6"]
+[ext_resource type="PackedScene" uid="uid://ctshn8e3838l0" path="res://Assets/finish_screen.tscn" id="3_getpj"]
 [ext_resource type="PackedScene" uid="uid://bpylalkfe7wlo" path="res://Themes/controls.tscn" id="4_074og"]
 [ext_resource type="Texture2D" uid="uid://bawp212chtwne" path="res://Assets/idle-1.png" id="5_kek77"]
 [ext_resource type="Texture2D" uid="uid://exyhliisc4ky" path="res://Assets/idle-2.png" id="6_4c57u"]
@@ -470,7 +471,7 @@ animations = [{
 
 [sub_resource type="AudioStream" id="AudioStream_yaehf"]
 
-[node name="root" type="SceneRoot" node_paths=PackedStringArray("game_root", "ui_root", "start_menu", "game_ui", "player", "player_physics", "spawner")]
+[node name="root" type="SceneRoot" node_paths=PackedStringArray("game_root", "ui_root", "start_menu", "game_ui", "player", "player_physics", "spawner", "control_menu")]
 game_root = NodePath("CenterContainer/GameRoot")
 ui_root = NodePath("UI")
 start_menu = NodePath("UI")
@@ -478,6 +479,7 @@ game_ui = NodePath("UI/GameUI")
 player = NodePath("CenterContainer/GameRoot/Player")
 player_physics = NodePath("CenterContainer/GameRoot/Player/RigidBody2D")
 spawner = NodePath("CenterContainer/GameRoot/Spawner")
+control_menu = NodePath("UI/GameUI/Control")
 process_mode = 1
 
 [node name="UI" type="Control" parent="."]
@@ -517,6 +519,11 @@ grow_vertical = 0
 icon = ExtResource("1_cegan")
 flat = true
 
+[node name="FinishMenu" parent="UI/GameUI" instance=ExtResource("3_getpj")]
+visible = false
+z_index = 12
+layout_mode = 1
+
 [node name="Control" parent="UI/GameUI" instance=ExtResource("4_074og")]
 process_mode = 3
 z_index = 15
@@ -526,13 +533,8 @@ layout_mode = 1
 z_index = -10
 z_as_relative = false
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -666.667
-offset_right = 666.667
+offset_right = 1333.33
 offset_bottom = 750.0
-grow_horizontal = 2
 mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/GameUI/BackgroundAspectContainer"]
@@ -607,7 +609,7 @@ sprite_frames = SubResource("SpriteFrames_5vw27")
 animation = &"left"
 speed_scale = 2.0
 
-[node name="Spawner" type="Spawner" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four", "audio_stream")]
+[node name="Spawner" type="Spawner" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four", "audio_stream", "scorer", "finish_menu", "settings_gear")]
 seconds_ahead_to_spawn = 2
 spawn_zone_one = NodePath("SpawnZone")
 spawn_zone_two = NodePath("SpawnZone2")
@@ -617,6 +619,9 @@ note_scene = ExtResource("6_7mycd")
 note_fail_scene = ExtResource("7_272bh")
 note_success_scene = ExtResource("7_kek77")
 audio_stream = NodePath("../../../AudioStreamPlayer")
+scorer = NodePath("../Scorer")
+finish_menu = NodePath("../../../UI/GameUI/FinishMenu")
+settings_gear = NodePath("../../../UI/GameUI/OpenButton")
 
 [node name="SpawnZone" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")

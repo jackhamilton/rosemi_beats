@@ -1,9 +1,13 @@
+use godot::classes::AudioServer;
+use godot::classes::Button;
 use godot::classes::IControl;
 use godot::classes::Control;
 use godot::classes::InputEvent;
 use godot::classes::InputMap;
+use godot::classes::Slider;
 use godot::{prelude::*};
 
+use crate::save::storage::Storage;
 use crate::ui::remap_button::RemapButton;
 
 #[derive(GodotClass, Debug)]
@@ -11,6 +15,10 @@ use crate::ui::remap_button::RemapButton;
 pub struct ControlMenu {
     pub awaiting_action: Option<String>,
     pub remap_buttons: Vec<Gd<RemapButton>>,
+    #[export]
+    pub volume_slider: Option<Gd<Slider>>,
+    #[export]
+    pub menu_button: Option<Gd<Button>>,
 
     pub base: Base<Control>
 }
@@ -22,6 +30,18 @@ impl ControlMenu {
 
     pub fn await_action(&mut self, action: String) {
         self.awaiting_action = Some(action);
+    }
+
+    pub fn back_to_menu(&mut self) {
+        let main_scene = try_load::<PackedScene>("res://start_menu.tscn").expect("Menu scene not found");
+        self.base_mut().get_tree().expect("Tree not found").get_root().expect("No root").add_child(&main_scene.instantiate().expect("Failed to instantiate menu"));
+        self.base_mut().get_tree().expect("Failed to get tree").set_pause(false);
+        self.base_mut().get_node_as::<Node>("/root/root").queue_free();
+    }
+
+    pub fn change_volume(&mut self, volume: f32) {
+        AudioServer::singleton().set_bus_volume_db(AudioServer::singleton().get_bus_index("Master"), ((100.0 - volume)/100.0) * -60.0);
+        Storage::set_volume(volume);
     }
 
     pub fn remap(&mut self, action: String, input_event: Gd<InputEvent>) {
@@ -38,10 +58,22 @@ impl ControlMenu {
 impl IControl for ControlMenu {
     fn init(base: Base<Control>) -> Self {
         Self {
+            volume_slider: None,
+            menu_button: None,
             awaiting_action: None,
             remap_buttons: vec![],
             base
         }
+    }
+
+    fn ready(&mut self) {
+        let vol = Storage::get_volume();
+        let slider = self.volume_slider.as_mut().expect("No volume slider attached");
+        slider.set_value(vol as f64);
+        self.change_volume(vol);
+        let slider = self.volume_slider.as_ref().expect("No volume slider attached");
+        slider.signals().value_changed().connect_other(self, |this, volume| this.change_volume(volume as f32));
+        self.menu_button.as_ref().expect("No menu button attached").signals().pressed().connect_other(self, |this| this.back_to_menu());
     }
 
     fn process(&mut self, _delta: f32) {
@@ -62,7 +94,7 @@ impl IControl for ControlMenu {
             self.awaiting_action = None;
             if event.is_action("pause") {
                 let visible = self.base().is_visible();
-                self.base_mut().set_visible(!!visible);
+                self.base_mut().set_visible(!visible);
             }
         }
     }

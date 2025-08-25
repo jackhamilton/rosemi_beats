@@ -7,6 +7,8 @@ pub struct Scorer {
     pub score: i32,
     #[var]
     pub combo: i32,
+    #[var]
+    pub max_combo: i32,
     #[export]
     pub hit_audio_stream: Option<Gd<AudioStreamPlayer>>,
     #[export]
@@ -26,6 +28,9 @@ impl Scorer {
             self.score += 100 * self.combo;
         }
         self.combo += 1;
+        if self.combo > self.max_combo {
+            self.max_combo = self.combo;
+        }
 
         let stream = self.hit_audio_stream.as_mut().expect("Error: no attached audio stream");
         let playback = stream.get_stream_playback().expect("Could not retrieve playback");
@@ -46,6 +51,7 @@ impl INode for Scorer {
         Self {
             score: 0,
             combo: 0,
+            max_combo: 0,
             hit_audio_stream: None,
             hit_audio_resource: None,
             base

@@ -1,7 +1,10 @@
+use crate::nodes::scorer::Scorer;
+use crate::ui::finish_menu::FinishMenu;
 use crate::ui::spawn_zone::SpawnZone;
 use crate::step_converter::NoteType;
 use crate::step_converter::TimedNote;
 use godot::classes::AudioServer;
+use godot::classes::Control;
 use godot::{classes::{AudioStreamMp3, AudioStreamPlayer, InputEvent}, prelude::*};
 
 #[derive(GodotClass, Debug)]
@@ -11,6 +14,9 @@ pub struct Spawner {
     pub player_height: Option<f32>,
     pub left_x: Option<f32>,
     pub right_x: Option<f32>,
+    pub song_title: Option<String>,
+    pub song_max_combo: Option<i32>,
+    pub song_difficulty: Option<i32>,
     pub song: Option<Vec<TimedNote>>,
     #[var]
     pub time: f32,
@@ -39,6 +45,12 @@ pub struct Spawner {
     pub note_success_scene: Option<Gd<PackedScene>>,
     #[export]
     pub audio_stream: Option<Gd<AudioStreamPlayer>>,
+    #[export]
+    pub scorer: Option<Gd<Scorer>>,
+    #[export]
+    pub finish_menu: Option<Gd<FinishMenu>>,
+    #[export]
+    pub settings_gear: Option<Gd<Control>>,
 
     pub base: Base<Node>
 }
@@ -51,10 +63,20 @@ impl Spawner {
         self.player_base_position = Some(position);
     }
 
-    pub fn start(&mut self, song: Vec<TimedNote>, resource: String) {
+    pub fn start(
+        &mut self,
+        song: Vec<TimedNote>,
+        resource: String,
+        song_title: String,
+        song_max_combo: i32,
+        song_difficulty: i32
+    ) {
         self.time = 0.0;
         self.song = Some(song);
         self.playing = true;
+        self.song_title = Some(song_title);
+        self.song_max_combo = Some(song_max_combo);
+        self.song_difficulty = Some(song_difficulty);
         let stream = self.audio_stream.as_mut().expect("No audio stream");
         let audio_stream = AudioStreamMp3::load_from_file(&resource).expect("Failed to load audio file");
         stream.set_stream(&audio_stream);
@@ -122,12 +144,17 @@ impl INode for Spawner {
             note_fail_scene: None,
             note_success_scene: None,
             audio_stream: None,
+            song_title: None,
+            song_max_combo: None,
+            song_difficulty: None,
+            scorer: None,
+            finish_menu: None,
+            settings_gear: None,
             base
         }
     }
 
     fn process(&mut self, _delta: f64) {
-        godot_print!("Time: {}", self.time);
         let mut audio_stream = self.audio_stream.as_mut().expect("No valid audio stream").clone();
         let time = audio_stream.get_playback_position() as f64 + AudioServer::singleton().get_time_since_last_mix();
         if self.playing {
@@ -139,6 +166,23 @@ impl INode for Spawner {
                     self.spawn_notes(&next_notes);
                 }
             }
+        }
+
+        if self.time as f64 > audio_stream.get_stream().expect("No stream").get_length() {
+            self.settings_gear.as_mut().expect("No settings gear").set_visible(false);
+            let finish = self.finish_menu.as_mut().expect("No finish menu attached");
+            finish.set_visible(true);
+            let scorer = self.scorer.as_ref().expect("No scorer");
+            let score = scorer.bind().score;
+            let combo = scorer.bind().max_combo;
+            finish.bind_mut().setup(
+                true,
+                combo >= self.song_max_combo.expect("Song max combo invalid"),
+                score.into(),
+                combo,
+                self.song_title.as_ref().expect("Song title invalid").to_string(),
+                self.song_difficulty.expect("Song difficulty invalid")
+            );
         }
     }
 

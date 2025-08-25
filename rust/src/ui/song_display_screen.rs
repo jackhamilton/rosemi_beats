@@ -6,6 +6,8 @@ use godot::classes::TextureRect;
 use godot::classes::VBoxContainer;
 use godot::prelude::*;
 
+use crate::save::storage::Storage;
+use crate::ui::difficulty_button::Difficulty;
 use crate::ui::difficulty_button::DifficultyButton;
 use crate::step_converter::Song;
 
@@ -18,6 +20,8 @@ pub struct DisplayScreen {
     pub title_label: Option<Gd<Label>>,
     #[export]
     pub subtitle_label: Option<Gd<Label>>,
+    #[export]
+    pub best_score_label: Option<Gd<Label>>,
     #[export]
     pub image_container: Option<Gd<TextureRect>>,
 
@@ -34,10 +38,30 @@ impl DisplayScreen {
         for mut child in button_container_mut.get_children().iter_shared() {
             child.queue_free();
         }
+        let mut difficulty_scores: Vec<(i32, i64, i32, bool)> = vec![];
         for difficulty in difficulties {
-            let button = DifficultyButton::new(difficulty.difficulty, difficulty, song_file.clone());
+            let button = DifficultyButton::new(difficulty.difficulty, difficulty.clone(), song_file.clone());
+            let score: i64 = match Storage::get_scores().get(&format!("{}{}", title, difficulty.difficulty)) {
+                Some(score) => *score,
+                None => 0,
+            };
+            let combo: i32 = match Storage::get_combos().get(&format!("{}{}", title, difficulty.difficulty)) {
+                Some(combo) => *combo,
+                None => 0,
+            };
+            difficulty_scores.push((difficulty.difficulty as i32, score, combo, combo >= difficulty.max_combo));
             button_container_mut.add_child(&button);
         }
+        let mut best_score: String = "BEST\n".to_string();
+        for score in difficulty_scores {
+            let text = Difficulty::from(score.0 as u8).get_text();
+            if score.3 {
+                best_score.push_str(&format!("{}: {} (FULL)\n", text, score.1));
+            } else {
+                best_score.push_str(&format!("{}: {} ({}x)\n", text, score.1, score.2));
+            }
+        }
+        self.best_score_label.as_mut().expect("No score label").set_text(best_score.strip_suffix("\n").expect("Error"));
     }
 }
 
@@ -48,6 +72,7 @@ impl IPanelContainer for DisplayScreen {
             button_container: None,
             title_label: None,
             subtitle_label: None,
+            best_score_label: None,
             image_container: None,
             base
         }

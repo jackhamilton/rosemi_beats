@@ -19,6 +19,8 @@ pub struct SongMetadata {
     #[var]
     pub subtitle: GString,
     #[var]
+    pub max_combo: i32,
+    #[var]
     pub image_resource: GString,
 
     pub base: Base<Node>
@@ -33,6 +35,7 @@ impl INode for SongMetadata {
         Self {
             title: "".into(),
             subtitle: "".into(),
+            max_combo: 0,
             image_resource: "".into(),
             base
         }
@@ -51,9 +54,12 @@ impl Loader {
                     SongMetadata {
                         title: "The Great Rosemi-sama Theme Song".into(),
                         subtitle: "author unsure".into(),
-                        image_resource: "res://Assets/Images/theme.jpg".into(),
+                        max_combo: 108,
+                        image_resource: "res://Assets/Images/theme.png".into(),
                         base
                     }
+
+
                 })
             }
         ];

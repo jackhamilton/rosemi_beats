@@ -1,6 +1,8 @@
 use crate::objects::game_object::GameObject;
 use crate::nodes::node_spawner::Spawner;
 use crate::objects::player::Player;
+use crate::save::storage::Storage;
+use crate::ui::control_menu::{self, ControlMenu};
 use godot::prelude::*;
 use godot::classes::{CollisionShape2D, Control, Node, RigidBody2D, StaticBody2D};
 use crate::step_converter::Song;
@@ -22,6 +24,8 @@ pub struct SceneRoot {
     pub player_physics: Option<Gd<RigidBody2D>>,
     #[export]
     pub spawner: Option<Gd<Spawner>>,
+    #[export]
+    pub control_menu: Option<Gd<ControlMenu>>,
 
     pub base: Base<Node>
 }
@@ -33,6 +37,7 @@ impl SceneRoot {
         let game_ui = self.game_ui.as_mut().expect("Game UI not found");
         // let start_menu = self.start_menu.as_mut().expect("Start menu not found");
         let game_root = self.game_root.as_mut().expect("Game root not found");
+
         let mut spawner = self.spawner.as_mut().expect("Spawner not found").bind_mut();
         let bounds = &mut game_root.get_node_as::<StaticBody2D>("Bounds");
         let bounds_shape = &mut bounds.get_node_as::<CollisionShape2D>("CollisionShape2D");
@@ -65,7 +70,19 @@ impl SceneRoot {
         player.set_visible(true);
         game_ui.set_visible(true);
 
-        spawner.start(song.rasterize(), song_file);
+        if Storage::get_controls_seen() {
+            self.control_menu.as_mut().expect("No control menu attached").set_visible(false);
+        } else {
+            Storage::set_controls_seen(true);
+        }
+
+        spawner.start(
+            song.clone().rasterize(),
+            song_file,
+            song.clone().title,
+            song.clone().max_combo,
+            song.difficulty as i32
+        );
     }
 }
 
@@ -80,6 +97,7 @@ impl INode for SceneRoot {
             player: None,
             player_physics: None,
             spawner: None,
+            control_menu: None,
             base
         }
     }
