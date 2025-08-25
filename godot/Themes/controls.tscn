@@ -1,0 +1,186 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpylalkfe7wlo"]
+
+[ext_resource type="Theme" uid="uid://g6s7kyscpx8r" path="res://Themes/UI/general.tres" id="1_qo8cm"]
+[ext_resource type="FontFile" uid="uid://djyca2ww5ko37" path="res://Assets/Fonts/upheavtt.ttf" id="2_kq3yo"]
+[ext_resource type="Texture2D" uid="uid://dfxtd657bgm8g" path="res://Assets/attack_left_up.png" id="2_kxvun"]
+[ext_resource type="Texture2D" uid="uid://d1krqr5e4mfv" path="res://Assets/attack_left.png" id="2_xwvqn"]
+[ext_resource type="Texture2D" uid="uid://dh6tvhj5uqgyy" path="res://Assets/attack_right_up.png" id="4_kq3yo"]
+[ext_resource type="Texture2D" uid="uid://ba1idio3fju3p" path="res://Assets/attack_right.png" id="5_kxtwu"]
+
+[node name="Control" type="ControlMenu"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qo8cm")
+
+[node name="Container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -180.0
+offset_right = 216.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Container" type="MarginContainer" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="UIToggleButton" parent="Container/Container" node_paths=PackedStringArray("toggles")]
+toggles = NodePath("../../..")
+z_index = 1000
+z_as_relative = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_kq3yo")
+theme_override_font_sizes/font_size = 20
+text = "X"
+
+[node name="CenterContainer" type="CenterContainer" parent="Container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Container/CenterContainer"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Container/CenterContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer/CenterContainer" node_paths=PackedStringArray("control_menu")]
+control_menu = NodePath("../../../../../../../../../..")
+action_name = "up_left"
+z_index = 100
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("1_qo8cm")
+action_mode = 0
+text = "w"
+
+[node name="TextureRect" type="TextureRect" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("2_kxvun")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/CenterContainer" node_paths=PackedStringArray("control_menu")]
+control_menu = NodePath("../../../../../../../../../..")
+action_name = "left"
+z_index = 100
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("1_qo8cm")
+action_mode = 0
+text = "s"
+
+[node name="TextureRect" type="TextureRect" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("2_xwvqn")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("4_kq3yo")
+
+[node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer/CenterContainer" node_paths=PackedStringArray("control_menu")]
+control_menu = NodePath("../../../../../../../../../..")
+action_name = "up_right"
+z_index = 100
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("1_qo8cm")
+action_mode = 0
+text = "r"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("5_kxtwu")
+
+[node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2/CenterContainer" node_paths=PackedStringArray("control_menu")]
+control_menu = NodePath("../../../../../../../../../..")
+action_name = "right"
+z_index = 100
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("1_qo8cm")
+action_mode = 0
+text = "f"
+
+[node name="Label2" type="Label" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "click to remap"
+horizontal_alignment = 1

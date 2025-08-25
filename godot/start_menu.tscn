@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c46ie1wo70cod"]
+[gd_scene load_steps=6 format=3 uid="uid://c46ie1wo70cod"]
 
 [ext_resource type="PackedScene" uid="uid://duw8ogg6ghd3w" path="res://display_cell.tscn" id="1_ia0g5"]
+[ext_resource type="FontFile" uid="uid://8s28ohrqq6gm" path="res://Assets/Fonts/8-BIT WONDER.TTF" id="2_vpdu5"]
+[ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="3_v2mkm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ia0g5"]
+font = ExtResource("2_vpdu5")
 
 [sub_resource type="LabelSettings" id="LabelSettings_vpdu5"]
-font_size = 12
+font = ExtResource("3_v2mkm")
+font_size = 14
 
 [node name="StartMenu" type="LoadScreen" node_paths=PackedStringArray("insertion_container", "song_display")]
 insertion_container = NodePath("CenterContainer/HBoxContainer/PanelContainer/ScrollContainer/VBoxContainer")
@@ -79,12 +83,14 @@ layout_mode = 2
 text = "Placeholder [title]"
 label_settings = SubResource("LabelSettings_ia0g5")
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Label2" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Placeholder [subtitle]"
 label_settings = SubResource("LabelSettings_vpdu5")
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/VBoxContainer"]
 layout_mode = 2

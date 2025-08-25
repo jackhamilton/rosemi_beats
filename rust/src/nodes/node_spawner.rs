@@ -1,6 +1,7 @@
 use crate::ui::spawn_zone::SpawnZone;
 use crate::step_converter::NoteType;
 use crate::step_converter::TimedNote;
+use godot::classes::AudioServer;
 use godot::{classes::{AudioStreamMp3, AudioStreamPlayer, InputEvent}, prelude::*};
 
 #[derive(GodotClass, Debug)]
@@ -125,9 +126,12 @@ impl INode for Spawner {
         }
     }
 
-    fn process(&mut self, delta: f64) {
+    fn process(&mut self, _delta: f64) {
+        godot_print!("Time: {}", self.time);
+        let mut audio_stream = self.audio_stream.as_mut().expect("No valid audio stream").clone();
+        let time = audio_stream.get_playback_position() as f64 + AudioServer::singleton().get_time_since_last_mix();
         if self.playing {
-            self.time += delta as f32;
+            self.time = time as f32;
             if let Some(next_notes) = self.get_next_notes() {
                 if next_notes.timestamp < self.time + self.seconds_ahead_to_spawn as f32 {
                     //play

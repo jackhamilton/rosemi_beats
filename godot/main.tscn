@@ -1,21 +1,25 @@
-[gd_scene load_steps=70 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=83 format=3 uid="uid://dd4wedw83l0f7"]
 
+[ext_resource type="Texture2D" uid="uid://vevltp88imeo" path="res://Assets/settingsgear.png" id="1_cegan"]
 [ext_resource type="Texture2D" uid="uid://dpl02vgeqjrok" path="res://Assets/wafflehouse.png" id="1_kek77"]
 [ext_resource type="Script" uid="uid://c6p855t7v3qku" path="res://Scripts/GameUI/score_label.gd" id="2_4c57u"]
 [ext_resource type="Script" uid="uid://du5qogcl5fugp" path="res://Scripts/GameUI/combo_label.gd" id="3_efxa6"]
-[ext_resource type="Script" uid="uid://cwtq52cjcg7uv" path="res://Scripts/Buttons/player.gd" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bpylalkfe7wlo" path="res://Themes/controls.tscn" id="4_074og"]
 [ext_resource type="Texture2D" uid="uid://bawp212chtwne" path="res://Assets/idle-1.png" id="5_kek77"]
 [ext_resource type="Texture2D" uid="uid://exyhliisc4ky" path="res://Assets/idle-2.png" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://drkpy2c26ih3s" path="res://note.tscn" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://dka7c40tph5hg" path="res://Scripts/GameUI/spawn_zone_line.gd" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://2r2r5jjaqbav" path="res://Scripts/Animations/fail_note.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://qupllthnsfi0" path="res://Scripts/Animations/success_note.tscn" id="7_kek77"]
+[ext_resource type="Texture2D" uid="uid://cadkefvojwcih" path="res://Assets/idle_2_r.png" id="7_yaehf"]
 [ext_resource type="Texture2D" uid="uid://46p73v0vqc0s" path="res://Assets/idle-3.png" id="7_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://m7sjw2mlyimh" path="res://Assets/idle_right.png" id="8_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://bshkfkr5unnf0" path="res://Assets/leftup_1.png" id="9_vivmo"]
 [ext_resource type="Texture2D" uid="uid://cb3l2l028o0u" path="res://Assets/left_2_2.png" id="9_yaehf"]
 [ext_resource type="Texture2D" uid="uid://rdok16hsjk2j" path="res://Assets/right.png" id="11_074og"]
 [ext_resource type="Texture2D" uid="uid://cuqbe7pc7o0wu" path="res://Assets/rightupt.png" id="12_cegan"]
+[ext_resource type="AudioStream" uid="uid://d17rv6dm5aur5" path="res://Assets/Audio/hit.wav" id="17_yaehf"]
+[ext_resource type="Script" uid="uid://dskemq01u64mr" path="res://controls_manager.gd" id="20_82xsv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
 font_size = 32
@@ -88,6 +92,38 @@ region = Rect2(250, 0, 50, 50)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4k2k6"]
 atlas = ExtResource("6_4c57u")
 region = Rect2(300, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cegan"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqtf5"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vm84"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu3dr"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyx1q"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(250, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dhbp"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(300, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx0wj"]
+atlas = ExtResource("7_yaehf")
+region = Rect2(350, 0, 50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rl1p"]
 atlas = ExtResource("7_ycdy4")
@@ -276,6 +312,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_074og")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cegan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqtf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vm84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu3dr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyx1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dhbp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx0wj")
+}],
+"loop": true,
+"name": &"idle_2_r",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0rl1p")
 }, {
 "duration": 1.0,
@@ -317,11 +382,11 @@ animations = [{
 "texture": SubResource("AtlasTexture_qnost")
 }],
 "loop": true,
-"name": &"idle_r",
+"name": &"idle_3_r",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.01,
 "texture": SubResource("AtlasTexture_wnkbs")
 }, {
 "duration": 1.0,
@@ -336,7 +401,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uypp3")
 }],
-"loop": true,
+"loop": false,
 "name": &"left",
 "speed": 5.0
 }, {
@@ -356,7 +421,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e71vb")
 }],
-"loop": true,
+"loop": false,
 "name": &"left_up",
 "speed": 5.0
 }, {
@@ -376,7 +441,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rm4vd")
 }],
-"loop": true,
+"loop": false,
 "name": &"right",
 "speed": 5.0
 }, {
@@ -396,20 +461,24 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uatky")
 }],
-"loop": true,
+"loop": false,
 "name": &"right_up",
 "speed": 5.0
 }]
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_4c57u"]
 
-[node name="root" type="SceneRoot" node_paths=PackedStringArray("game_root", "ui_root", "start_menu", "game_ui", "player", "spawner")]
+[sub_resource type="AudioStream" id="AudioStream_yaehf"]
+
+[node name="root" type="SceneRoot" node_paths=PackedStringArray("game_root", "ui_root", "start_menu", "game_ui", "player", "player_physics", "spawner")]
 game_root = NodePath("CenterContainer/GameRoot")
 ui_root = NodePath("UI")
 start_menu = NodePath("UI")
 game_ui = NodePath("UI/GameUI")
 player = NodePath("CenterContainer/GameRoot/Player")
+player_physics = NodePath("CenterContainer/GameRoot/Player/RigidBody2D")
 spawner = NodePath("CenterContainer/GameRoot/Spawner")
+process_mode = 1
 
 [node name="UI" type="Control" parent="."]
 texture_filter = 1
@@ -419,16 +488,43 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="GameUI" type="Control" parent="UI"]
+z_index = 50
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="OpenButton" type="UIToggleButton" parent="UI/GameUI" node_paths=PackedStringArray("toggles")]
+toggles = NodePath("../Control")
+process_mode = 3
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -58.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("1_cegan")
+flat = true
+
+[node name="Control" parent="UI/GameUI" instance=ExtResource("4_074og")]
+process_mode = 3
+z_index = 15
+layout_mode = 1
 
 [node name="BackgroundAspectContainer" type="CenterContainer" parent="UI/GameUI"]
+z_index = -10
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -437,10 +533,12 @@ offset_left = -666.667
 offset_right = 666.667
 offset_bottom = 750.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/GameUI/BackgroundAspectContainer"]
 custom_minimum_size = Vector2(900, 750)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_kek77")
 expand_mode = 3
 stretch_mode = 4
@@ -451,6 +549,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/GameUI/CenterContainer"]
 layout_mode = 2
@@ -477,6 +576,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="GameRoot" type="Node2D" parent="CenterContainer"]
 texture_filter = 1
@@ -488,11 +588,10 @@ position = Vector2(0, 643)
 position = Vector2(588, -4)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="Player" type="GameObject" parent="CenterContainer/GameRoot"]
+[node name="Player" type="Player" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("sprite")]
+sprite = NodePath("RigidBody2D/Sprite2D")
 z_index = 10
 position = Vector2(580, 572)
-script = ExtResource("3_lquwl")
-metadata/_custom_type_script = "uid://cwtq52cjcg7uv"
 
 [node name="RigidBody2D" type="RigidBody2D" parent="CenterContainer/GameRoot/Player"]
 physics_material_override = SubResource("PhysicsMaterial_1bvp3")
@@ -505,8 +604,7 @@ disabled = true
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CenterContainer/GameRoot/Player/RigidBody2D"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_5vw27")
-animation = &"idle"
-frame_progress = 0.640445
+animation = &"left"
 speed_scale = 2.0
 
 [node name="Spawner" type="Spawner" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("spawn_zone_one", "spawn_zone_two", "spawn_zone_three", "spawn_zone_four", "audio_stream")]
@@ -531,6 +629,7 @@ position = Vector2(-70, 515)
 custom_minimum_size = Vector2(600, 100)
 offset_right = 600.0
 offset_bottom = 100.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
@@ -551,6 +650,7 @@ position = Vector2(630, 400)
 custom_minimum_size = Vector2(600, 100)
 offset_right = 600.0
 offset_bottom = 100.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D2" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone2"]
@@ -572,6 +672,7 @@ position = Vector2(-70, 400)
 custom_minimum_size = Vector2(600, 100)
 offset_right = 600.0
 offset_bottom = 100.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D3" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone3"]
@@ -592,6 +693,7 @@ position = Vector2(630, 515)
 custom_minimum_size = Vector2(600, 100)
 offset_right = 600.0
 offset_bottom = 100.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D4" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone4"]
@@ -602,7 +704,21 @@ width = 3.0
 default_color = Color(1, 0, 0, 1)
 script = ExtResource("7_5vw27")
 
-[node name="Scorer" type="Scorer" parent="CenterContainer/GameRoot"]
+[node name="Scorer" type="Scorer" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("hit_audio_stream")]
+hit_audio_stream = NodePath("../../../HitSoundPlayer")
+hit_audio_resource = ExtResource("17_yaehf")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 1
 stream = SubResource("AudioStreamMP3_4c57u")
+
+[node name="HitSoundPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = SubResource("AudioStream_yaehf")
+volume_db = -10.0
+autoplay = true
+
+[node name="ControlsManager" type="Node" parent="." node_paths=PackedStringArray("control_menu")]
+script = ExtResource("20_82xsv")
+control_menu = NodePath("../UI/GameUI/Control")
+metadata/_custom_type_script = "uid://dskemq01u64mr"

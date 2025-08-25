@@ -5,6 +5,7 @@ use godot::classes::Control;
 use godot::classes::IControl;
 
 use crate::loader::Loader;
+use crate::save::storage::Storage;
 use crate::ui::song_cell::SongCell;
 use crate::ui::song_display_screen::DisplayScreen;
 use crate::step_converter::Song;
@@ -37,6 +38,7 @@ impl IControl for LoadScreen {
     }
 
     fn enter_tree(&mut self) {
+        Storage::load();
         let res = Loader::get_res();
         for item in &res {
             let song = Song::from_str(item.text, item.bpm);

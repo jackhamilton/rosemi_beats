@@ -24,7 +24,7 @@ impl DifficultyButton {
     pub fn new(difficulty: u8, song: Song, song_file: String) -> Gd<Self> {
         let diff = Difficulty::from(difficulty);
 
-        Gd::from_init_fn(|base| {
+        let mut button = Gd::from_init_fn(|base| {
             DifficultyButton {
                 theme: diff.get_button_theme(),
                 difficulty_str: diff.get_text().into(),
@@ -33,7 +33,9 @@ impl DifficultyButton {
 
                 base
             }
-        })
+        });
+        button.set_custom_minimum_size(Vector2 { x: 80.0, y: 24.0 });
+        button
     }
 }
 
@@ -48,9 +50,9 @@ pub enum Difficulty {
 impl Difficulty {
     fn get_text(&self) -> String {
         match self {
-            Self::Easy => "Easy".to_string(),
-            Self::Medium => "Medium".to_string(),
-            Self::Hard => "Hard".to_string(),
+            Self::Easy => "EASY".to_string(),
+            Self::Medium => "MEDIUM".to_string(),
+            Self::Hard => "HARD".to_string(),
         }
     }
 

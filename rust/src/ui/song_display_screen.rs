@@ -37,7 +37,6 @@ impl DisplayScreen {
         for difficulty in difficulties {
             let button = DifficultyButton::new(difficulty.difficulty, difficulty, song_file.clone());
             button_container_mut.add_child(&button);
-            godot_print!("Adding button");
         }
     }
 }

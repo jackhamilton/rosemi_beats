@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://duw8ogg6ghd3w"]
+[gd_scene load_steps=4 format=3 uid="uid://duw8ogg6ghd3w"]
+
+[ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="2_qlfut"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vtkpe"]
-font_size = 20
+font = ExtResource("2_qlfut")
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_qlfut"]
-font_size = 14
+font = ExtResource("2_qlfut")
 
 [node name="DisplayCell" type="SongCell" node_paths=PackedStringArray("image_rect", "title_label", "subtitle_label")]
 image_rect = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/TextureRect")

@@ -1,5 +1,6 @@
 use crate::objects::game_object::GameObject;
 use crate::nodes::node_spawner::Spawner;
+use crate::objects::player::Player;
 use godot::prelude::*;
 use godot::classes::{CollisionShape2D, Control, Node, RigidBody2D, StaticBody2D};
 use crate::step_converter::Song;
@@ -16,7 +17,7 @@ pub struct SceneRoot {
     #[export]
     pub game_ui: Option<Gd<Control>>,
     #[export]
-    pub player: Option<Gd<GameObject>>,
+    pub player: Option<Gd<Player>>,
     #[export]
     pub player_physics: Option<Gd<RigidBody2D>>,
     #[export]

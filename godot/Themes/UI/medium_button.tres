@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cjcg4wr8lnwyi"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cjcg4wr8lnwyi"]
+
+[ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="1_u4qnv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3alnw"]
 
@@ -12,6 +14,7 @@ bg_color = Color(0.50887, 0.513529, 3.85046e-07, 1)
 bg_color = Color(0.308267, 0.311268, 9.62615e-08, 1)
 
 [resource]
+Button/fonts/font = ExtResource("1_u4qnv")
 Button/styles/focus = SubResource("StyleBoxEmpty_3alnw")
 Button/styles/hover = SubResource("StyleBoxFlat_u4qnv")
 Button/styles/normal = SubResource("StyleBoxFlat_hksk1")
