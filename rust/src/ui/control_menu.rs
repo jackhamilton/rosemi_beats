@@ -45,6 +45,17 @@ impl ControlMenu {
     }
 
     pub fn remap(&mut self, action: String, input_event: Gd<InputEvent>) {
+        let actions = InputMap::singleton().get_actions();
+        for action in actions.iter_shared() {
+            let events = InputMap::singleton().action_get_events(&action);
+            for event in events.iter_shared() {
+                if event.is_match(&input_event) {
+                    InputMap::singleton().action_erase_events(&action);
+                    break;
+                }
+            }
+        }
+
         InputMap::singleton().action_erase_events(&action);
         InputMap::singleton().action_add_event(&action, &input_event);
         for mut btn in self.remap_buttons.clone() {

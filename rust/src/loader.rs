@@ -19,6 +19,8 @@ pub struct SongMetadata {
     #[var]
     pub subtitle: GString,
     #[var]
+    pub url: GString,
+    #[var]
     pub max_combo: i32,
     #[var]
     pub image_resource: GString,
@@ -35,6 +37,7 @@ impl INode for SongMetadata {
         Self {
             title: "".into(),
             subtitle: "".into(),
+            url: "".into(),
             max_combo: 0,
             image_resource: "".into(),
             base
@@ -54,12 +57,11 @@ impl Loader {
                     SongMetadata {
                         title: "The Great Rosemi-sama Theme Song".into(),
                         subtitle: "author unsure".into(),
+                        url: "https://www.youtube.com/watch?v=c3DIbvqVkxY".into(),
                         max_combo: 108,
                         image_resource: "res://Assets/Images/theme.png".into(),
                         base
                     }
-
-
                 })
             }
         ];
