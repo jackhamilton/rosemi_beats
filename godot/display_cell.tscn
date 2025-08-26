@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://duw8ogg6ghd3w"]
+[gd_scene load_steps=5 format=3 uid="uid://duw8ogg6ghd3w"]
 
 [ext_resource type="ButtonGroup" uid="uid://wtx785evljv1" path="res://song_select_group.tres" id="1_qlfut"]
-[ext_resource type="Texture2D" uid="uid://pf2ihwif1agp" path="res://Assets/Images/ringo_mogire_beam.jpg" id="1_vtkpe"]
 [ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="2_qlfut"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vtkpe"]
@@ -61,7 +60,6 @@ theme_override_constants/separation = 15
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/Toggle/MarginContainer/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
-texture = ExtResource("1_vtkpe")
 expand_mode = 2
 stretch_mode = 6
 

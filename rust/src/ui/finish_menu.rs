@@ -61,8 +61,11 @@ impl FinishMenu {
         let main_scene = try_load::<PackedScene>("res://start_menu.tscn").expect("Menu scene not found");
         let mut scene = main_scene.instantiate_as::<LoadScreen>();
         scene.set_name("StartMenu");
+        let children = self.base_mut().get_tree().expect("No tree").get_root().expect("No root").get_children();
         self.base_mut().get_tree().expect("Tree not found").get_root().expect("No root").add_child(&scene);
-        self.base_mut().get_node_as::<Node>("/root/root").queue_free();
+        for mut child in children.iter_shared() {
+            child.queue_free();
+        }
     }
 }
 

@@ -34,9 +34,12 @@ impl ControlMenu {
 
     pub fn back_to_menu(&mut self) {
         let main_scene = try_load::<PackedScene>("res://start_menu.tscn").expect("Menu scene not found");
+        let children = self.base_mut().get_tree().expect("No tree").get_root().expect("No root").get_children();
         self.base_mut().get_tree().expect("Tree not found").get_root().expect("No root").add_child(&main_scene.instantiate().expect("Failed to instantiate menu"));
         self.base_mut().get_tree().expect("Failed to get tree").set_pause(false);
-        self.base_mut().get_node_as::<Node>("/root/root").queue_free();
+        for mut child in children.iter_shared() {
+            child.queue_free();
+        }
     }
 
     pub fn change_volume(&mut self, volume: f32) {

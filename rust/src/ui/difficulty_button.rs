@@ -3,6 +3,7 @@ use godot::prelude::*;
 use godot::classes::Button;
 use godot::classes::IButton;
 
+use crate::loader::SongMetadata;
 use crate::nodes::scene_root::SceneRoot;
 use crate::step_converter::Song;
 
@@ -15,13 +16,14 @@ pub struct DifficultyButton {
     pub difficulty_str: GString,
     pub song: Song,
     pub song_file: String,
+    pub metadata: Gd<SongMetadata>,
 
     pub base: Base<Button>
 }
 
 #[godot_api]
 impl DifficultyButton {
-    pub fn new(difficulty: u8, song: Song, song_file: String) -> Gd<Self> {
+    pub fn new(difficulty: u8, song: Song, song_file: String, metadata: Gd<SongMetadata>) -> Gd<Self> {
         let diff = Difficulty::from(difficulty);
 
         let mut button = Gd::from_init_fn(|base| {
@@ -30,6 +32,7 @@ impl DifficultyButton {
                 difficulty_str: diff.get_text().into(),
                 song,
                 song_file,
+                metadata,
 
                 base
             }
@@ -87,7 +90,7 @@ impl IButton for DifficultyButton {
         let mut main = main_scene.instantiate_as::<SceneRoot>();
         let children = self.base_mut().get_tree().expect("No tree").get_root().expect("No root").get_children();
         self.base_mut().get_tree().expect("Tree not found").get_root().expect("No root").add_child(&main);
-        main.bind_mut().start(self.song.clone(), self.song_file.clone());
+        main.bind_mut().start(self.song.clone(), self.song_file.clone(), self.metadata.clone());
         for mut child in children.iter_shared() {
             child.queue_free();
         }

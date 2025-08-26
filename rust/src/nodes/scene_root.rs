@@ -1,3 +1,4 @@
+use crate::loader::SongMetadata;
 use crate::objects::game_object::GameObject;
 use crate::nodes::node_spawner::Spawner;
 use crate::objects::player::Player;
@@ -5,7 +6,7 @@ use crate::save::storage::Storage;
 use crate::ui::control_menu::{self, ControlMenu};
 use godot::prelude::*;
 use godot::classes::{CollisionShape2D, Control, Node, RigidBody2D, StaticBody2D};
-use crate::step_converter::Song;
+use crate::step_converter::{Song, TimedNote};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Node)]
@@ -28,6 +29,7 @@ pub struct SceneRoot {
     pub control_menu: Option<Gd<ControlMenu>>,
 
     pub song: Option<Song>,
+    pub metadata: Option<Gd<SongMetadata>>,
     pub song_file: Option<String>,
 
     pub base: Base<Node>
@@ -42,8 +44,14 @@ impl SceneRoot {
         let song = self.song.as_ref().expect("No song");
         let song_file = self.song_file.as_ref().expect("No song file");
         let spawner = self.spawner.as_mut().expect("No spawner");
+        let raster = song.clone().rasterize();
+        let offset = self.metadata.as_ref().expect("No metadata").bind().offset;
+        let notes = raster.iter().map(|item| TimedNote {
+            timestamp: item.timestamp + offset,
+            line: item.line.clone()
+        }).collect();
         spawner.bind_mut().start(
-            song.clone().rasterize(),
+            notes,
             song_file.to_string(),
             song.clone().title,
             song.clone().max_combo,
@@ -51,7 +59,7 @@ impl SceneRoot {
         );
     }
 
-    pub fn start(&mut self, song: Song, song_file: String) {
+    pub fn start(&mut self, song: Song, song_file: String, metadata: Gd<SongMetadata>) {
         let player = self.player.as_mut().expect("Player not found");
         let game_ui = self.game_ui.as_mut().expect("Game UI not found");
         // let start_menu = self.start_menu.as_mut().expect("Start menu not found");
@@ -97,6 +105,7 @@ impl SceneRoot {
 
         self.song_file = Some(song_file);
         self.song = Some(song);
+        self.metadata = Some(metadata);
     }
 }
 
@@ -113,6 +122,7 @@ impl INode for SceneRoot {
             spawner: None,
             control_menu: None,
             song: None,
+            metadata: None,
             song_file: None,
             base
         }

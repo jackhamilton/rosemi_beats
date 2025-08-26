@@ -30,7 +30,7 @@ impl LoadScreen {
         let display = self.song_display.as_mut().expect("Could not lock song display");
         let meta = metadata.bind();
         let image = try_load::<Texture2D>(&meta.image_resource).expect("Improper image referenced");
-        display.bind_mut().setup(meta.title.to_string(), meta.subtitle.to_string(), image, song, audio, meta.url.clone().into());
+        display.bind_mut().setup(meta.title.to_string(), meta.subtitle.to_string(), image, song, audio, meta.url.clone().into(), metadata.clone());
     }
 }
 
