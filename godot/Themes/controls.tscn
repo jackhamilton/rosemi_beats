@@ -220,6 +220,7 @@ text = "f"
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
 

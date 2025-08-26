@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=93 format=3 uid="uid://dd4wedw83l0f7"]
 
 [ext_resource type="Texture2D" uid="uid://vevltp88imeo" path="res://Assets/settingsgear.png" id="1_cegan"]
 [ext_resource type="Texture2D" uid="uid://dpl02vgeqjrok" path="res://Assets/wafflehouse.png" id="1_kek77"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cb3l2l028o0u" path="res://Assets/left_2_2.png" id="9_yaehf"]
 [ext_resource type="Texture2D" uid="uid://rdok16hsjk2j" path="res://Assets/right.png" id="11_074og"]
 [ext_resource type="Texture2D" uid="uid://cuqbe7pc7o0wu" path="res://Assets/rightupt.png" id="12_cegan"]
+[ext_resource type="Texture2D" uid="uid://bx7sd3vtpj4og" path="res://Assets/left_1.png" id="13_1u8w0"]
 [ext_resource type="AudioStream" uid="uid://d17rv6dm5aur5" path="res://Assets/Audio/hit.wav" id="17_yaehf"]
 [ext_resource type="Script" uid="uid://dskemq01u64mr" path="res://controls_manager.gd" id="20_82xsv"]
 [ext_resource type="Texture2D" uid="uid://bhsmyoveq5du" path="res://Assets/chalk.png" id="21_d13ii"]
@@ -183,25 +184,25 @@ region = Rect2(200, 0, 50, 50)
 atlas = ExtResource("8_2cqfq")
 region = Rect2(250, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wnkbs"]
-atlas = ExtResource("9_yaehf")
-region = Rect2(0, 0, 150, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkkcx"]
+atlas = ExtResource("13_1u8w0")
+region = Rect2(0, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f6a44"]
-atlas = ExtResource("9_yaehf")
-region = Rect2(150, 0, 150, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_34ol3"]
+atlas = ExtResource("13_1u8w0")
+region = Rect2(50, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0cbny"]
-atlas = ExtResource("9_yaehf")
-region = Rect2(300, 0, 150, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2n8d"]
+atlas = ExtResource("13_1u8w0")
+region = Rect2(100, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hrvbo"]
-atlas = ExtResource("9_yaehf")
-region = Rect2(450, 0, 150, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy5fy"]
+atlas = ExtResource("13_1u8w0")
+region = Rect2(150, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uypp3"]
-atlas = ExtResource("9_yaehf")
-region = Rect2(600, 0, 150, 50)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx4rg"]
+atlas = ExtResource("13_1u8w0")
+region = Rect2(200, 0, 50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blkrb"]
 atlas = ExtResource("9_vivmo")
@@ -222,6 +223,26 @@ region = Rect2(150, 0, 50, 50)
 [sub_resource type="AtlasTexture" id="AtlasTexture_e71vb"]
 atlas = ExtResource("9_vivmo")
 region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnkbs"]
+atlas = ExtResource("9_yaehf")
+region = Rect2(0, 0, 150, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6a44"]
+atlas = ExtResource("9_yaehf")
+region = Rect2(150, 0, 150, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cbny"]
+atlas = ExtResource("9_yaehf")
+region = Rect2(300, 0, 150, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrvbo"]
+atlas = ExtResource("9_yaehf")
+region = Rect2(450, 0, 150, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uypp3"]
+atlas = ExtResource("9_yaehf")
+region = Rect2(600, 0, 150, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnkwl"]
 atlas = ExtResource("11_074og")
@@ -397,19 +418,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 0.01,
-"texture": SubResource("AtlasTexture_wnkbs")
+"texture": SubResource("AtlasTexture_kkkcx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f6a44")
+"texture": SubResource("AtlasTexture_34ol3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0cbny")
+"texture": SubResource("AtlasTexture_c2n8d")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hrvbo")
+"texture": SubResource("AtlasTexture_wy5fy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uypp3")
+"texture": SubResource("AtlasTexture_gx4rg")
 }],
 "loop": false,
 "name": &"left",
@@ -433,6 +454,26 @@ animations = [{
 }],
 "loop": false,
 "name": &"left_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.01,
+"texture": SubResource("AtlasTexture_wnkbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6a44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cbny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrvbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uypp3")
+}],
+"loop": false,
+"name": &"left_wide",
 "speed": 5.0
 }, {
 "frames": [{
@@ -565,10 +606,8 @@ horizontal_alignment = 1
 z_index = -10
 z_as_relative = false
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
+offset_right = 1300.0
 offset_bottom = 760.0
-grow_horizontal = 2
 mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/GameUI/BackgroundAspectContainer"]
@@ -667,6 +706,17 @@ scorer = NodePath("../Scorer")
 finish_menu = NodePath("../../../UI/GameUI/FinishMenu")
 settings_gear = NodePath("../../../UI/GameUI/OpenButton")
 
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/GameRoot/Spawner"]
+texture_filter = 1
+offset_left = 291.0
+offset_top = 210.0
+offset_right = 861.0
+offset_bottom = 780.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("21_d13ii")
+
 [node name="SpawnZone" type="SpawnZone" parent="CenterContainer/GameRoot/Spawner" node_paths=PackedStringArray("rect", "spawner", "scorer")]
 rect = NodePath("ColorRect")
 inverted = true
@@ -683,6 +733,7 @@ color = Color(1, 1, 1, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="Line2D" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone"]
+visible = false
 z_index = 100
 position = Vector2(0, 25)
 points = PackedVector2Array(0, 0, 0, 50)
@@ -704,6 +755,7 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D2" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone2"]
+visible = false
 z_index = 100
 position = Vector2(-886, 25)
 points = PackedVector2Array(0, 0, 0, 50)
@@ -726,6 +778,7 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D3" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone3"]
+visible = false
 z_index = 100
 position = Vector2(-1, 25)
 points = PackedVector2Array(0, 0, 0, 50)
@@ -747,22 +800,13 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Line2D4" type="Line2D" parent="CenterContainer/GameRoot/Spawner/SpawnZone4"]
+visible = false
 z_index = 100
 position = Vector2(-887, 21)
 points = PackedVector2Array(0, 0, 0, 50)
 width = 3.0
 default_color = Color(1, 0, 0, 1)
 script = ExtResource("7_5vw27")
-
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/GameRoot/Spawner"]
-texture_filter = 1
-offset_left = 291.0
-offset_top = 210.0
-offset_right = 861.0
-offset_bottom = 780.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("21_d13ii")
 
 [node name="Scorer" type="Scorer" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("hit_audio_stream")]
 hit_audio_stream = NodePath("../../../HitSoundPlayer")

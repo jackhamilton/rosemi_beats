@@ -114,7 +114,7 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.554675, 0.69994, 1, 1)
-text = "STREAM ➤"
+text = "STREAM"
 underline = 1
 
 [node name="Container" type="Container" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]

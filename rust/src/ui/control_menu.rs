@@ -84,9 +84,9 @@ impl IControl for ControlMenu {
         let vol = Storage::get_volume();
         let slider = self.volume_slider.as_mut().expect("No volume slider attached");
         slider.set_value(vol as f64);
-        self.change_volume(vol);
+        // self.change_volume(vol);
         let slider = self.volume_slider.as_ref().expect("No volume slider attached");
-        slider.signals().value_changed().connect_other(self, |this, volume| this.change_volume(volume as f32));
+        // slider.signals().value_changed().connect_other(self, |this, volume| this.change_volume(volume as f32));
         self.menu_button.as_ref().expect("No menu button attached").signals().pressed().connect_other(self, |this| this.back_to_menu());
     }
 
