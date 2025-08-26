@@ -26,7 +26,7 @@ pub struct LoadScreen {
 
 #[godot_api]
 impl LoadScreen {
-    pub fn select(&mut self, song: Vec<Song>, metadata: Gd<SongMetadata>, audio: String) {
+    pub fn select(&mut self, song: Vec<Song>, metadata: Gd<SongMetadata>, audio: Gd<Resource>) {
         let display = self.song_display.as_mut().expect("Could not lock song display");
         let meta = metadata.bind();
         let image = try_load::<Texture2D>(&meta.image_resource).expect("Improper image referenced");

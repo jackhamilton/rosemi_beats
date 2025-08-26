@@ -15,7 +15,7 @@ pub struct DifficultyButton {
     #[var]
     pub difficulty_str: GString,
     pub song: Song,
-    pub song_file: String,
+    pub song_file: Gd<Resource>,
     pub metadata: Gd<SongMetadata>,
 
     pub base: Base<Button>
@@ -23,7 +23,7 @@ pub struct DifficultyButton {
 
 #[godot_api]
 impl DifficultyButton {
-    pub fn new(difficulty: u8, song: Song, song_file: String, metadata: Gd<SongMetadata>) -> Gd<Self> {
+    pub fn new(difficulty: u8, song: Song, song_file: Gd<Resource>, metadata: Gd<SongMetadata>) -> Gd<Self> {
         let diff = Difficulty::from(difficulty);
 
         let mut button = Gd::from_init_fn(|base| {

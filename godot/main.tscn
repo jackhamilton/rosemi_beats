@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://dd4wedw83l0f7"]
+[gd_scene load_steps=87 format=3 uid="uid://dd4wedw83l0f7"]
 
 [ext_resource type="Texture2D" uid="uid://vevltp88imeo" path="res://Assets/settingsgear.png" id="1_cegan"]
 [ext_resource type="Texture2D" uid="uid://dpl02vgeqjrok" path="res://Assets/wafflehouse.png" id="1_kek77"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://cuqbe7pc7o0wu" path="res://Assets/rightupt.png" id="12_cegan"]
 [ext_resource type="AudioStream" uid="uid://d17rv6dm5aur5" path="res://Assets/Audio/hit.wav" id="17_yaehf"]
 [ext_resource type="Script" uid="uid://dskemq01u64mr" path="res://controls_manager.gd" id="20_82xsv"]
+[ext_resource type="Texture2D" uid="uid://bhsmyoveq5du" path="res://Assets/chalk.png" id="21_d13ii"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ryguw"]
 font_size = 128
@@ -538,6 +539,7 @@ layout_mode = 1
 
 [node name="Control" parent="UI/GameUI" instance=ExtResource("4_074og")]
 process_mode = 3
+visible = false
 z_index = 15
 layout_mode = 1
 
@@ -751,6 +753,16 @@ points = PackedVector2Array(0, 0, 0, 50)
 width = 3.0
 default_color = Color(1, 0, 0, 1)
 script = ExtResource("7_5vw27")
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/GameRoot/Spawner"]
+texture_filter = 1
+offset_left = 291.0
+offset_top = 210.0
+offset_right = 861.0
+offset_bottom = 780.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("21_d13ii")
 
 [node name="Scorer" type="Scorer" parent="CenterContainer/GameRoot" node_paths=PackedStringArray("hit_audio_stream")]
 hit_audio_stream = NodePath("../../../HitSoundPlayer")

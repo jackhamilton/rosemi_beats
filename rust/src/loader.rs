@@ -5,7 +5,7 @@ pub struct Loader {}
 #[derive(Debug)]
 pub struct IncludedSong {
     pub text: &'static str,
-    pub audio: String,
+    pub audio: Gd<Resource>,
     pub bpm: f32,
     pub metadata: Gd<SongMetadata>
 }
@@ -53,7 +53,7 @@ impl Loader {
         let files = vec![
             IncludedSong {
                 text: include_str!("res/theme.sm"),
-                audio: "res://Assets/Audio/theme.mp3".to_string(),
+                audio: load("res://Assets/Audio/theme.mp3"),
                 bpm: 120.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -69,7 +69,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/theme.sm"),
-                audio: "res://Assets/Audio/konton_boogie.mp3".to_string(),
+                audio: load("res://Assets/Audio/konton_boogie.mp3"),
                 bpm: 190.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -85,7 +85,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/kyoufuu_all_back.sm"),
-                audio: "res://Assets/Audio/kyoufuu_all_back.mp3".to_string(),
+                audio: load("res://Assets/Audio/kyoufuu_all_back.mp3"),
                 bpm: 135.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -101,7 +101,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/ringo_mogire_beam.sm"),
-                audio: "res://Assets/Audio/ringo_mogire_beam_edit.mp3".to_string(),
+                audio: load("res://Assets/Audio/ringo_mogire_beam_edit.mp3"),
                 bpm: 180.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -117,7 +117,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/theme.sm"),
-                audio: "res://Assets/Audio/marchen_debut.mp3".to_string(),
+                audio: load("res://Assets/Audio/marchen_debut.mp3"),
                 bpm: 172.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -133,7 +133,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/theme.sm"),
-                audio: "res://Assets/Audio/VITAMIN_SUMMER.mp3".to_string(),
+                audio: load("res://Assets/Audio/VITAMIN_SUMMER.mp3"),
                 bpm: 190.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {
@@ -149,7 +149,7 @@ impl Loader {
             },
             IncludedSong {
                 text: include_str!("res/theme.sm"),
-                audio: "res://Assets/Audio/ending.mp3".to_string(),
+                audio: load("res://Assets/Audio/ending.mp3"),
                 bpm: 140.0,
                 metadata: Gd::from_init_fn(|base| {
                     SongMetadata {

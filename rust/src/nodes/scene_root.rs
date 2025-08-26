@@ -30,7 +30,7 @@ pub struct SceneRoot {
 
     pub song: Option<Song>,
     pub metadata: Option<Gd<SongMetadata>>,
-    pub song_file: Option<String>,
+    pub song_file: Option<Gd<Resource>>,
 
     pub base: Base<Node>
 }
@@ -52,14 +52,14 @@ impl SceneRoot {
         }).collect();
         spawner.bind_mut().start(
             notes,
-            song_file.to_string(),
+            song_file.clone(),
             song.clone().title,
             song.clone().max_combo,
             song.difficulty as i32
         );
     }
 
-    pub fn start(&mut self, song: Song, song_file: String, metadata: Gd<SongMetadata>) {
+    pub fn start(&mut self, song: Song, song_file: Gd<Resource>, metadata: Gd<SongMetadata>) {
         let player = self.player.as_mut().expect("Player not found");
         let game_ui = self.game_ui.as_mut().expect("Game UI not found");
         // let start_menu = self.start_menu.as_mut().expect("Start menu not found");

@@ -28,7 +28,7 @@ pub struct SongCell {
 
     pub song: Option<Vec<Song>>,
     pub meta: Option<Gd<SongMetadata>>,
-    pub audio: Option<String>,
+    pub audio: Option<Gd<Resource>>,
 
     pub base: Base<Control>
 }
@@ -36,7 +36,7 @@ pub struct SongCell {
 #[godot_api]
 impl SongCell {
     #[func]
-    pub fn setup(&mut self, metadata: Gd<SongMetadata>, audio: String, load_screen_ref: Gd<LoadScreen>) {
+    pub fn setup(&mut self, metadata: Gd<SongMetadata>, audio: Gd<Resource>, load_screen_ref: Gd<LoadScreen>) {
         let image_rect_ref = self.image_rect.as_mut().expect("No image rect on base");
         let texture_path: String = metadata.bind().image_resource.clone().to_string();
         let texture = try_load::<Texture2D>(&texture_path).expect("Texture not found");
@@ -58,7 +58,7 @@ impl SongCell {
             let song = self.song.as_ref().expect("No song provided");
             let metadata = self.meta.as_ref().expect("No metadata provided");
             let audio = self.audio.as_ref().expect("No audio provided");
-            screen.bind_mut().select(song.to_vec(), metadata.clone(), audio.to_string());
+            screen.bind_mut().select(song.to_vec(), metadata.clone(), audio.clone());
         }
     }
 }

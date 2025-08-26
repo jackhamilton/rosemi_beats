@@ -66,7 +66,7 @@ impl Spawner {
     pub fn start(
         &mut self,
         song: Vec<TimedNote>,
-        resource: String,
+        resource: Gd<Resource>,
         song_title: String,
         song_max_combo: i32,
         song_difficulty: i32
@@ -78,7 +78,7 @@ impl Spawner {
         self.song_max_combo = Some(song_max_combo);
         self.song_difficulty = Some(song_difficulty);
         let stream = self.audio_stream.as_mut().expect("No audio stream");
-        let audio_stream = AudioStreamMp3::load_from_file(&resource).expect("Failed to load audio file");
+        let audio_stream = resource.try_cast::<AudioStreamMp3>().expect("Not an mp3");
         stream.set_stream(&audio_stream);
         stream.play();
     }

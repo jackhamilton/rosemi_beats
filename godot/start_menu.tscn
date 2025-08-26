@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c46ie1wo70cod"]
+[gd_scene load_steps=7 format=3 uid="uid://c46ie1wo70cod"]
 
 [ext_resource type="PackedScene" uid="uid://duw8ogg6ghd3w" path="res://display_cell.tscn" id="1_ia0g5"]
+[ext_resource type="Texture2D" uid="uid://cfi56ict31ndu" path="res://Assets/menuscreen.png" id="2_v2mkm"]
 [ext_resource type="FontFile" uid="uid://8s28ohrqq6gm" path="res://Assets/Fonts/8-BIT WONDER.TTF" id="2_vpdu5"]
 [ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="3_v2mkm"]
 
@@ -20,6 +21,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_v2mkm")
+stretch_mode = 6
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

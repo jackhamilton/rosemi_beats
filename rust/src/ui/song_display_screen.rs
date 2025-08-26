@@ -35,7 +35,7 @@ pub struct DisplayScreen {
 
 #[godot_api]
 impl DisplayScreen {
-    pub fn setup(&mut self, title: String, subtitle: String, image: Gd<Texture2D>, difficulties: Vec<Song>, song_file: String, link: String, metadata: Gd<SongMetadata>) {
+    pub fn setup(&mut self, title: String, subtitle: String, image: Gd<Texture2D>, difficulties: Vec<Song>, song_file: Gd<Resource>, link: String, metadata: Gd<SongMetadata>) {
         self.title_label.as_mut().expect("No title label linked.").set_text(&title);
         self.subtitle_label.as_mut().expect("No subtitle label linked.").set_text(&subtitle);
         self.image_container.as_mut().expect("No image container linked.").set_texture(&image);
