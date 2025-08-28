@@ -44,7 +44,6 @@ impl ControlMenu {
 
     pub fn change_volume(&mut self, volume: f32) {
         AudioServer::singleton().set_bus_volume_db(AudioServer::singleton().get_bus_index("Master"), ((100.0 - volume)/100.0) * -60.0);
-        Storage::set_volume(volume);
     }
 
     pub fn remap(&mut self, action: String, input_event: Gd<InputEvent>) {
@@ -111,5 +110,9 @@ impl IControl for ControlMenu {
                 self.base_mut().set_visible(!visible);
             }
         }
+    }
+
+    fn exit_tree(&mut self) {
+        Storage::set_volume(self.volume_slider.as_ref().expect("No slider").get_value() as f32);
     }
 }

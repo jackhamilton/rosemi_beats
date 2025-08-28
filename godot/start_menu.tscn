@@ -52,7 +52,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer/HBoxContainer"]
-custom_minimum_size = Vector2(500, 500)
+custom_minimum_size = Vector2(500, 550)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/HBoxContainer/PanelContainer"]
@@ -64,13 +64,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "link", "best_score_label", "image_container")]
+[node name="SongDisplay" type="DisplayScreen" parent="CenterContainer/HBoxContainer" node_paths=PackedStringArray("button_container", "title_label", "subtitle_label", "link", "best_score_label", "image_container", "timer_label")]
 button_container = NodePath("MarginContainer/CenterContainer/VBoxContainer/MarginContainer/VBoxContainer")
 title_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Label")
 subtitle_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Label2")
 link = NodePath("MarginContainer/CenterContainer/VBoxContainer/LinkButton")
 best_score_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/Panel/MarginContainer/score_label")
 image_container = NodePath("MarginContainer/CenterContainer/VBoxContainer/TextureRect")
+timer_label = NodePath("MarginContainer/CenterContainer/VBoxContainer/time")
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
@@ -110,11 +111,16 @@ label_settings = SubResource("LabelSettings_vpdu5")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="time" type="Label" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "0:00"
+horizontal_alignment = 1
+
 [node name="LinkButton" type="LinkButton" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.554675, 0.69994, 1, 1)
-text = "STREAM ➤"
+text = "STREAM"
 underline = 1
 
 [node name="Container" type="Container" parent="CenterContainer/HBoxContainer/SongDisplay/MarginContainer/CenterContainer/VBoxContainer"]

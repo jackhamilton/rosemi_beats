@@ -70,7 +70,8 @@ impl Difficulty {
     pub fn from(num: u8) -> Self {
         match num {
             0 => Self::Easy,
-            1 => Self::Medium,
+            1 => Self::Easy,
+            2 => Self::Medium,
             _ => Self::Hard
         }
     }

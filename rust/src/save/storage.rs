@@ -17,7 +17,7 @@ pub struct Storage {
 pub static SINGLETON: LazyLock<Mutex<Storage>> = LazyLock::new(|| Mutex::new(Storage {
     scores: HashMap::new(),
     combos: HashMap::new(),
-    volume: 0.0,
+    volume: 100.0,
     controls_seen: false,
 }));
 
