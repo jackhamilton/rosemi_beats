@@ -1,6 +1,25 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c65csyeqhrf56"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c65csyeqhrf56"]
 
 [ext_resource type="FontFile" uid="uid://bordel84042ev" path="res://Assets/Fonts/runescape_uf.ttf" id="1_56a0m"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qi0k"]
+bg_color = Color(0, 0.601159, 0.00500752, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_56a0m"]
+bg_color = Color(0.151507, 0.773805, 7.70092e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v77lb"]
+bg_color = Color(0, 0.52734, 0.18606, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7saj"]
+
 [resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
 Button/fonts/font = ExtResource("1_56a0m")
+Button/styles/focus = SubResource("StyleBoxFlat_1qi0k")
+Button/styles/hover = SubResource("StyleBoxFlat_56a0m")
+Button/styles/normal = SubResource("StyleBoxFlat_v77lb")
+Button/styles/pressed = SubResource("StyleBoxFlat_b7saj")

@@ -1,3 +1,4 @@
+use godot::classes::AudioStreamMp3;
 use godot::classes::IPanelContainer;
 use godot::classes::Label;
 use godot::classes::LinkButton;
@@ -30,12 +31,24 @@ pub struct DisplayScreen {
     #[export]
     pub image_container: Option<Gd<TextureRect>>,
 
+    #[export]
+    pub timer_label: Option<Gd<Label>>,
+
     pub base: Base<PanelContainer>
 }
 
 #[godot_api]
 impl DisplayScreen {
-    pub fn setup(&mut self, title: String, subtitle: String, image: Gd<Texture2D>, difficulties: Vec<Song>, song_file: Gd<Resource>, link: String, metadata: Gd<SongMetadata>) {
+    pub fn setup(
+        &mut self,
+        title: String,
+        subtitle: String,
+        image: Gd<Texture2D>,
+        difficulties: Vec<Song>,
+        song_file: Gd<Resource>,
+        link: String,
+        metadata: Gd<SongMetadata>
+    ) {
         self.title_label.as_mut().expect("No title label linked.").set_text(&title);
         self.subtitle_label.as_mut().expect("No subtitle label linked.").set_text(&subtitle);
         self.image_container.as_mut().expect("No image container linked.").set_texture(&image);
@@ -43,6 +56,11 @@ impl DisplayScreen {
         for mut child in button_container_mut.get_children().iter_shared() {
             child.queue_free();
         }
+        let song_length = song_file.clone().try_cast::<AudioStreamMp3>().expect("Not an mp3").get_length();
+        let cast_length = song_length.floor() as i32;
+        let min = cast_length / 60;
+        let sec = cast_length - (min * 60);
+        self.timer_label.as_mut().expect("No timer label").set_text(&format!("{}:{:02}", min, sec));
         let mut difficulty_scores: Vec<(i32, i64, i32, bool)> = vec![];
         for difficulty in difficulties {
             let button = DifficultyButton::new(difficulty.difficulty, difficulty.clone(), song_file.clone(), metadata.clone());
@@ -78,6 +96,7 @@ impl IPanelContainer for DisplayScreen {
             button_container: None,
             title_label: None,
             subtitle_label: None,
+            timer_label: None,
             link: None,
             best_score_label: None,
             image_container: None,

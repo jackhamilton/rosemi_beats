@@ -44,19 +44,7 @@ impl SceneRoot {
         let song = self.song.as_ref().expect("No song");
         let song_file = self.song_file.as_ref().expect("No song file");
         let spawner = self.spawner.as_mut().expect("No spawner");
-        let raster = song.clone().rasterize();
-        let offset = self.metadata.as_ref().expect("No metadata").bind().offset;
-        let notes = raster.iter().map(|item| TimedNote {
-            timestamp: item.timestamp + offset,
-            line: item.line.clone()
-        }).collect();
-        spawner.bind_mut().start(
-            notes,
-            song_file.clone(),
-            song.clone().title,
-            song.clone().max_combo,
-            song.difficulty as i32
-        );
+        spawner.bind_mut().start(song_file.clone());
     }
 
     pub fn start(&mut self, song: Song, song_file: Gd<Resource>, metadata: Gd<SongMetadata>) {
@@ -104,8 +92,21 @@ impl SceneRoot {
         }
 
         self.song_file = Some(song_file);
-        self.song = Some(song);
+        self.song = Some(song.clone());
         self.metadata = Some(metadata);
+
+        let raster = song.clone().rasterize();
+        let offset = self.metadata.as_ref().expect("No metadata").bind().offset;
+        let notes = raster.iter().map(|item| TimedNote {
+            timestamp: item.timestamp + offset,
+            line: item.line.clone()
+        }).collect();
+        spawner.setup(
+            notes,
+            song.clone().title,
+            song.clone().max_combo,
+            song.clone().difficulty as i32
+        );
     }
 }
 

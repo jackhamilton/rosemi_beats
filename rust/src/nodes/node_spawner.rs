@@ -3,6 +3,7 @@ use crate::ui::finish_menu::FinishMenu;
 use crate::ui::spawn_zone::SpawnZone;
 use crate::step_converter::NoteType;
 use crate::step_converter::TimedNote;
+use godot::classes::AnimatedSprite2D;
 use godot::classes::AudioServer;
 use godot::classes::Control;
 use godot::{classes::{AudioStreamMp3, AudioStreamPlayer, InputEvent}, prelude::*};
@@ -51,6 +52,10 @@ pub struct Spawner {
     pub finish_menu: Option<Gd<FinishMenu>>,
     #[export]
     pub settings_gear: Option<Gd<Control>>,
+    #[export]
+    pub player_animation: Option<Gd<AnimatedSprite2D>>,
+
+    pub started: bool,
 
     pub base: Base<Node>
 }
@@ -63,20 +68,41 @@ impl Spawner {
         self.player_base_position = Some(position);
     }
 
-    pub fn start(
+    pub fn setup(
         &mut self,
         song: Vec<TimedNote>,
-        resource: Gd<Resource>,
         song_title: String,
         song_max_combo: i32,
         song_difficulty: i32
     ) {
         self.time = 0.0;
         self.song = Some(song);
-        self.playing = true;
         self.song_title = Some(song_title);
         self.song_max_combo = Some(song_max_combo);
         self.song_difficulty = Some(song_difficulty);
+        self.prespawn();
+    }
+
+    fn prespawn(&mut self) {
+        let time = 0.0;
+        let mut spawn = true;
+        while spawn {
+            if let Some(next_notes) = self.get_next_notes() {
+                if next_notes.timestamp < time + self.seconds_ahead_to_spawn as f32 {
+                    self.song.as_mut().expect("Unknown error").remove(0);
+                    self.spawn_notes(&next_notes);
+                } else {
+                    spawn = false;
+                }
+            } else {
+                spawn = false;
+            }
+        }
+    }
+
+    pub fn start(&mut self, resource: Gd<Resource>) {
+        self.playing = true;
+        self.started = true;
         let stream = self.audio_stream.as_mut().expect("No audio stream");
         let audio_stream = resource.try_cast::<AudioStreamMp3>().expect("Not an mp3");
         stream.set_stream(&audio_stream);
@@ -133,6 +159,7 @@ impl INode for Spawner {
             song:None,
             time:0.0,
             playing:false,
+            started:false,
             seconds_ahead_to_spawn: 10,
             note_speed: 1,
             time_before_fail_ms: 100,
@@ -150,6 +177,7 @@ impl INode for Spawner {
             scorer: None,
             finish_menu: None,
             settings_gear: None,
+            player_animation: None,
             base
         }
     }
@@ -168,10 +196,14 @@ impl INode for Spawner {
             }
         }
 
-        if self.time as f64 > audio_stream.get_stream().expect("No stream").get_length() {
+        if !audio_stream.is_playing() {
+            self.playing = false;
+        }
+        if !self.playing && self.started && !self.finish_menu.as_ref().expect("No finish menu").is_visible() {
             self.settings_gear.as_mut().expect("No settings gear").set_visible(false);
             let finish = self.finish_menu.as_mut().expect("No finish menu attached");
             finish.set_visible(true);
+            self.player_animation.as_mut().expect("No player animation").set_animation("finish");
             let scorer = self.scorer.as_ref().expect("No scorer");
             let score = scorer.bind().score;
             let combo = scorer.bind().max_combo;
