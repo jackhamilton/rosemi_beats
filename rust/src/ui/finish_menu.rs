@@ -1,6 +1,9 @@
+use std::collections::HashMap;
+
+use gdrust_trinkets::{libs::singletons::TrinketSingletons};
 use godot::{classes::{Button, Control, IControl, Label}, prelude::*};
 
-use crate::{save::storage::Storage, ui::song_load_screen::LoadScreen};
+use crate::{gdrust_trinkets, ui::song_load_screen::LoadScreen};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Control)]
@@ -56,8 +59,13 @@ impl FinishMenu {
 
 
     pub fn menu(&mut self) {
-        Storage::set_score(self.song_title.clone(), self.song_difficulty, self.score);
-        Storage::set_combo(self.song_title.clone(), self.song_difficulty, self.combo);
+        let mut storage = TrinketSingletons::get_storage();
+        let mut score_map: HashMap<String, i64> = storage.bind().load_value("scores".to_string());
+        let mut combo_map: HashMap<String, i32> = storage.bind().load_value("combos".to_string());
+        score_map.insert(format!("{}{}", self.song_title, self.song_difficulty), self.score);
+        combo_map.insert(format!("{}{}", self.song_title, self.song_difficulty), self.combo);
+        storage.bind_mut().save_value("scores".to_string(), score_map);
+        storage.bind_mut().save_value("combos".to_string(), combo_map);
         let main_scene = try_load::<PackedScene>("res://start_menu.tscn").expect("Menu scene not found");
         let mut scene = main_scene.instantiate_as::<LoadScreen>();
         scene.set_name("StartMenu");

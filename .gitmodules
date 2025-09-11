@@ -1,0 +1,3 @@
+[submodule "rust/gdrust-trinkets"]
+	path = rust/gdrust-trinkets
+	url = https://github.com/jackhamilton/gdrust-trinkets.git

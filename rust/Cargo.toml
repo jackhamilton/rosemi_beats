@@ -7,6 +7,8 @@ edition = "2021"
 crate-type = ["cdylib"]  # Compile this crate to a dynamic C library.
 
 [dependencies]
+freezable-macros = "0.1.0"
+freezable-trait = "0.1.5"
 mutex = "1.0.2"
 regex = "1.11.1"
 serde = { version = "1.0.219", features = ["derive"] }

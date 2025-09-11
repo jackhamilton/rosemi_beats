@@ -18,6 +18,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "790eea4361631c5e7d22598ecd5723ff611904e3344ce8720784c93e3d83d40b"
 
 [[package]]
+name = "freezable-macros"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "24e8257ca3af82071471bcb8034716781b47e7bb23d033cbfad93f1f9c6ba312"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "freezable-trait"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2dc9e1988124c92c3ea4871a7dba782bc82e76158eb230ce8ce17f42f4582ce4"
+dependencies = [
+ "freezable-macros",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "gdextension-api"
 version = "0.2.2"
 source = "git+https://github.com/godot-rust/godot4-prebuilt?branch=releases#09432b4c2c16f044f0296f96512661ea106003ff"
@@ -203,6 +225,8 @@ checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
 name = "rust"
 version = "0.1.0"
 dependencies = [
+ "freezable-macros",
+ "freezable-trait",
  "godot",
  "mutex",
  "regex",

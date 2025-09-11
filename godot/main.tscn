@@ -899,8 +899,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="OpenButton" type="UIToggleButton" parent="UI/GameUI" node_paths=PackedStringArray("toggles")]
-toggles = NodePath("../Control")
+[node name="OpenButton" type="Button" parent="UI/GameUI"]
 process_mode = 3
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
@@ -1098,7 +1097,7 @@ size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("21_d13ii")
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/GameRoot/Spawner"]
+[node name="TextureRect2" type="TextureRect" parent="CenterContainer/GameRoot/Spawner"]
 texture_filter = 1
 offset_left = 291.0
 offset_top = 210.0

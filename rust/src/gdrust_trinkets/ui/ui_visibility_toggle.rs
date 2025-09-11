@@ -5,17 +5,17 @@ use godot::{prelude::*};
 
 #[derive(GodotClass, Debug)]
 #[class(base=Button)]
-pub struct UIToggleButton {
+pub struct UIVisibilityToggleButton {
     #[export]
     pub toggles: Option<Gd<Control>>,
 
     pub base: Base<Button>
 }
 
-impl UIToggleButton {}
+impl UIVisibilityToggleButton {}
 
 #[godot_api]
-impl IButton for UIToggleButton {
+impl IButton for UIVisibilityToggleButton {
     fn init(base: Base<Button>) -> Self {
         Self {
             toggles: None,

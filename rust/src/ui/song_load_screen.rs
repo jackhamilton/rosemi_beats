@@ -6,7 +6,6 @@ use godot::classes::IControl;
 
 use crate::loader::Loader;
 use crate::loader::SongMetadata;
-use crate::save::storage::Storage;
 use crate::ui::song_cell::SongCell;
 use crate::ui::song_display_screen::DisplayScreen;
 use crate::step_converter::Song;
@@ -46,7 +45,6 @@ impl IControl for LoadScreen {
     }
 
     fn enter_tree(&mut self) {
-        Storage::load();
         let res = Loader::get_res();
         let mut load_cell: Option<Gd<SongCell>> = None;
         for item in &res {

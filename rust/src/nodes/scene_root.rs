@@ -1,9 +1,9 @@
+use crate::gdrust_trinkets::libs::singletons::TrinketSingletons;
+use crate::gdrust_trinkets::persistence::storage::Storage;
 use crate::loader::SongMetadata;
-use crate::objects::game_object::GameObject;
 use crate::nodes::node_spawner::Spawner;
 use crate::objects::player::Player;
-use crate::save::storage::Storage;
-use crate::ui::control_menu::{self, ControlMenu};
+use crate::ui::control_menu::ControlMenu;
 use godot::prelude::*;
 use godot::classes::{CollisionShape2D, Control, Node, RigidBody2D, StaticBody2D};
 use crate::step_converter::{Song, TimedNote};
@@ -85,10 +85,11 @@ impl SceneRoot {
         player.set_visible(true);
         game_ui.set_visible(true);
 
-        if Storage::get_controls_seen() {
+        let mut storage = TrinketSingletons::get_storage();
+        if storage.bind().load_bool("controls_seen".to_string()) {
             self.control_menu.as_mut().expect("No control menu attached").set_visible(false);
         } else {
-            Storage::set_controls_seen(true);
+            storage.bind_mut().save_bool("controls_seen".to_string(), true);
         }
 
         self.song_file = Some(song_file);

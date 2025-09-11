@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+
+use gdrust_trinkets::libs::singletons::TrinketSingletons;
 use godot::classes::AudioStreamMp3;
 use godot::classes::IPanelContainer;
 use godot::classes::Label;
@@ -8,8 +11,8 @@ use godot::classes::TextureRect;
 use godot::classes::VBoxContainer;
 use godot::prelude::*;
 
+use crate::gdrust_trinkets;
 use crate::loader::SongMetadata;
-use crate::save::storage::Storage;
 use crate::ui::difficulty_button::Difficulty;
 use crate::ui::difficulty_button::DifficultyButton;
 use crate::step_converter::Song;
@@ -64,11 +67,14 @@ impl DisplayScreen {
         let mut difficulty_scores: Vec<(i32, i64, i32, bool)> = vec![];
         for difficulty in difficulties {
             let button = DifficultyButton::new(difficulty.difficulty, difficulty.clone(), song_file.clone(), metadata.clone());
-            let score: i64 = match Storage::get_scores().get(&format!("{}{}", title, difficulty.difficulty)) {
+            let storage = TrinketSingletons::get_storage();
+            let score_map: HashMap<String, i64> = storage.bind().load_value("scores".to_string());
+            let combo_map: HashMap<String, i32> = storage.bind().load_value("combos".to_string());
+            let score: i64 = match score_map.get(&format!("{}{}", title, difficulty.difficulty)) {
                 Some(score) => *score,
                 None => 0,
             };
-            let combo: i32 = match Storage::get_combos().get(&format!("{}{}", title, difficulty.difficulty)) {
+            let combo: i32 = match combo_map.get(&format!("{}{}", title, difficulty.difficulty)) {
                 Some(combo) => *combo,
                 None => 0,
             };

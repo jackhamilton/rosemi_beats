@@ -15,7 +15,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [node name="Control" type="ControlMenu" node_paths=PackedStringArray("volume_slider", "menu_button")]
-volume_slider = NodePath("Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/HSlider")
+volume_slider = NodePath("")
 menu_button = NodePath("Container/Container2/Button")
 texture_filter = 1
 anchors_preset = 8
@@ -52,8 +52,7 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="Button" type="UIToggleButton" parent="Container/Container" node_paths=PackedStringArray("toggles")]
-toggles = NodePath("../../..")
+[node name="Button" type="Button" parent="Container/Container"]
 z_index = 1000
 z_as_relative = false
 custom_minimum_size = Vector2(40, 40)
@@ -130,8 +129,7 @@ layout_mode = 2
 [node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer/CenterContainer" node_paths=PackedStringArray("control_menu")]
-control_menu = NodePath("../../../../../../../../../..")
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer/CenterContainer"]
 action_name = "up_left"
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
@@ -152,8 +150,7 @@ layout_mode = 2
 [node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/CenterContainer" node_paths=PackedStringArray("control_menu")]
-control_menu = NodePath("../../../../../../../../../..")
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/CenterContainer"]
 action_name = "left"
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
@@ -184,8 +181,7 @@ texture = ExtResource("4_kq3yo")
 [node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer/CenterContainer" node_paths=PackedStringArray("control_menu")]
-control_menu = NodePath("../../../../../../../../../..")
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer/CenterContainer"]
 action_name = "up_right"
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
@@ -206,8 +202,7 @@ texture = ExtResource("5_kxtwu")
 [node name="CenterContainer" type="CenterContainer" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2/CenterContainer" node_paths=PackedStringArray("control_menu")]
-control_menu = NodePath("../../../../../../../../../..")
+[node name="Button" type="RemapButton" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/HBoxContainer2/CenterContainer"]
 action_name = "right"
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
@@ -228,7 +223,9 @@ theme_override_constants/separation = 20
 layout_mode = 2
 text = "Volume"
 
-[node name="HSlider" type="HSlider" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="HSlider" type="VolumeHSlider" parent="Container/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+persisted = true
+persistence_key = "volume"
 layout_mode = 2
 size_flags_horizontal = 3
 value = 100.0
